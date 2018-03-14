@@ -8,7 +8,8 @@
     <Authors>Heather Floyd</Authors>
     <Company></Company>
     <Product>Dragonfly</Product>
-    <Description>A collection of tools to extract data about an Umbraco site.</Description>
+    <Description>A collection of tools to extract data about an Umbraco site.
+(Dependency on UmbracoCms.Core - min 7.7.1)</Description>
     <PackageLicenseUrl>https://github.com/hfloyd/Dragonfly.SiteAuditor/blob/master/LICENSE.md</PackageLicenseUrl>
     <PackageProjectUrl>https://github.com/hfloyd/Dragonfly.SiteAuditor</PackageProjectUrl>
     <RepositoryUrl>https://github.com/hfloyd/Dragonfly.SiteAuditor</RepositoryUrl>
@@ -19,7 +20,8 @@
     <DocumentationFile>bin\Debug\net45\Dragonfly.SiteAuditor.xml</DocumentationFile>
   </PropertyGroup>
   <ItemGroup>
-    <PackageReference Include="HtmlAgilityPack" Version="1.4.9.5" />
+    <PackageReference Include="Dragonfly.Net" Version="1.7.1" />
+    <PackageReference Include="UmbracoCms.Core" Version="7.7.1" />
   </ItemGroup>
   <ItemGroup>
     <Reference Include="Microsoft.CSharp" />
@@ -29,4 +31,8 @@
   </ItemGroup>
 
   <Import Project="..\Custom.targets" />
+
+  <Target Name="PostBuild" AfterTargets="PostBuildEvent">
+    <Exec Command="if $(ConfigurationName) == Debug (XCOPY /y &quot;$(TargetDir)$(TargetName).*&quot; &quot;C:\Users\Heather\NAS Folders\Active Projects\Webs\Clients\SPRT\Sprott-v6\sourcecode\Sprott-V6\bin&quot;)" />
+  </Target>
 </Project>

@@ -3,6 +3,7 @@
     using System;
     using System.Collections.Generic;
     using System.Linq;
+    using Sprott.Core.SiteAuditor.Models;
     using Umbraco.Core;
     using Umbraco.Core.Models;
     using Umbraco.Core.Services;
@@ -49,11 +50,21 @@
             return docTypesList;
         }
 
+        /// <summary>
+        /// Get a ContentType model for a Doctype by its alias
+        /// </summary>
+        /// <param name="DocTypeAlias"></param>
+        /// <returns></returns>
         public static ContentType GetContentTypeByAlias(string DocTypeAlias)
         {
             return (ContentType)umbContentTypeService.GetContentType(DocTypeAlias);
         }
 
+        /// <summary>
+        /// Get a DataTypeDefinition for a Datatype by its DataTypeDefinitionId
+        /// </summary>
+        /// <param name="DtDefintionId"></param>
+        /// <returns></returns>
         public static DataTypeDefinition GetDataTypeDefinition(int DtDefintionId)
         {
             return (DataTypeDefinition)umbDataTypeService.GetDataTypeDefinitionById(DtDefintionId);
@@ -113,8 +124,12 @@
             
             return templateAlias;
         }
-
-
+        
+        /// <summary>
+        /// Get a list of all DocTypes which contain a property of a specified Alias
+        /// </summary>
+        /// <param name="PropertyAlias"></param>
+        /// <returns></returns>
         public static IEnumerable<string> GetDocTypesForProperty(string PropertyAlias)
         {
             var docTypesList =  new List<string>();
@@ -131,6 +146,75 @@
             }
 
             return docTypesList;
+        }
+
+        /// <summary>
+        /// Get a NodePropertyDataTypeInfo model for a specified Node and Property Alias
+        /// (Includes information about the Property, Datatype, and the node's property Value)
+        /// </summary>
+        /// <param name="PropertyAlias"></param>
+        /// <param name="Node"></param>
+        /// <returns></returns>
+        public static NodePropertyDataTypeInfo GetPropertyDataTypeInfo(string PropertyAlias, IPublishedContent Node)
+        {
+            var umbContentTypeService = ApplicationContext.Current.Services.ContentTypeService;
+            var umbDataTypeService = ApplicationContext.Current.Services.DataTypeService;
+
+            var dtInfo = new NodePropertyDataTypeInfo();
+            dtInfo.NodeId = Node.Id;
+            dtInfo.Property = Node.GetProperty(PropertyAlias);
+
+            //Find datatype of property
+            IDataTypeDefinition dataType = null;
+
+            var docType = umbContentTypeService.GetContentType(Node.DocumentTypeId);
+            var matchingProperties = docType.PropertyTypes.Where(n => n.Alias == PropertyAlias).ToList();
+
+            if (matchingProperties.Any())
+            {
+                var propertyType = matchingProperties.First();
+                dataType = umbDataTypeService.GetDataTypeDefinitionById(propertyType.DataTypeDefinitionId);
+
+                dtInfo.DataType = dataType;
+                dtInfo.PropertyEditorAlias = dataType.PropertyEditorAlias;
+                dtInfo.DatabaseType = dataType.DatabaseType.ToString();
+                dtInfo.DocTypeAlias = Node.DocumentTypeAlias;
+            }
+            else
+            {
+                //Look at Compositions for prop data
+                var matchingCompProperties = docType.CompositionPropertyTypes.Where(n => n.Alias == PropertyAlias).ToList();
+                if (matchingCompProperties.Any())
+                {
+                    var propertyType = matchingCompProperties.First();
+                    dataType = umbDataTypeService.GetDataTypeDefinitionById(propertyType.DataTypeDefinitionId);
+
+                    dtInfo.DataType = dataType;
+                    dtInfo.PropertyEditorAlias = dataType.PropertyEditorAlias;
+                    dtInfo.DatabaseType = dataType.DatabaseType.ToString();
+
+                    if (docType.ContentTypeComposition.Any())
+                    {
+                        var compsList = docType.ContentTypeComposition.Where(n => n.PropertyTypeExists(PropertyAlias)).ToList();
+                        if (compsList.Any())
+                        {
+                            dtInfo.DocTypeAlias = Node.DocumentTypeAlias;
+                            dtInfo.DocTypeCompositionAlias = compsList.First().Alias;
+                        }
+                        else
+                        {
+                            dtInfo.DocTypeAlias = Node.DocumentTypeAlias;
+                            dtInfo.DocTypeCompositionAlias = "Unknown Composition";
+                        }
+                    }
+                }
+                else
+                {
+                    dtInfo.ErrorMessage = $"No property found for alias '{PropertyAlias}' in DocType '{docType.Name}'";
+                }
+            }
+
+            return dtInfo;
         }
     }
 }

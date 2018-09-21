@@ -1,0 +1,88 @@
+@using Dragonfly.NetHelpers
+@using Dragonfly.Umbraco7Helpers
+@using Sprott.Core.SiteAuditor.Models
+
+@model NodePropertyDataTypeInfo
+
+@{
+    IHtmlString formattedValue = new HtmlString("");
+    var renderingDone = false;
+
+    var editor = Model.DataType.PropertyEditorAlias;
+    var dbType = Model.DataType.DatabaseType;
+
+    //Special handling based on editor
+    switch (editor)
+    {
+        case "Umbraco.NestedContent":
+            Html.RenderPartial("/Views/Partials/SiteAuditor/DataFormats/NestedContent.cshtml", Model.Property);
+            renderingDone = true;
+            break;
+
+        case "Our.Umbraco.NestedContent":
+            Html.RenderPartial("/Views/Partials/SiteAuditor/DataFormats/NestedContent.cshtml", Model.Property);
+            renderingDone = true;
+            break;
+
+        case "Umbraco.MultiNodeTreePicker2":
+            Html.RenderPartial("/Views/Partials/SiteAuditor/DataFormats/Mntp.cshtml", Model.Property);
+            renderingDone = true;
+            break;
+
+        case "Umbraco.ContentPicker2":
+            Html.RenderPartial("/Views/Partials/SiteAuditor/DataFormats/ContentPicker.cshtml", Model.Property);
+            renderingDone = true;
+            break;
+
+        case "Tags":
+            Html.RenderPartial("/Views/Partials/SiteAuditor/DataFormats/Tags.cshtml", Model.Property);
+            renderingDone = true;
+            break;
+
+        case "Umbraco.MediaPicker2":
+            var mediaImageVdd = new ViewDataDictionary();
+            mediaImageVdd.Add("ImageWidth", 300);
+
+            Html.RenderPartial("/Views/Partials/SiteAuditor/DataFormats/MediaImage.cshtml", Model.Property, mediaImageVdd);
+            renderingDone = true;
+            break;
+
+    }
+
+    //If we get here, handle based on DB type
+    switch (dbType)
+    {
+        case DataTypeDatabaseType.Date:
+            Html.RenderPartial("/Views/Partials/SiteAuditor/DataFormats/DateValue.cshtml", Model.Property.GetValue<DateTime>());
+            renderingDone = true;
+            break;
+
+        case DataTypeDatabaseType.Decimal:
+            formattedValue = new HtmlString(Model.Property.GetValue<string>());
+            break;
+
+        case DataTypeDatabaseType.Integer:
+            formattedValue = new HtmlString(Model.Property.GetValue<string>());
+            break;
+
+        case DataTypeDatabaseType.Nvarchar:
+            formattedValue = new HtmlString(Model.Property.GetValue<string>());
+            break;
+
+        case DataTypeDatabaseType.Ntext:
+            formattedValue = new HtmlString(Model.Property.GetValue<string>());
+            break;
+
+        default:
+            //If we get here, who knows what happened, just use string
+            formattedValue = new HtmlString(Model.Property.GetValue<string>());
+            break;
+    }
+
+    if (!renderingDone)
+    {
+        <span>@formattedValue</span>
+    }
+}
+
+

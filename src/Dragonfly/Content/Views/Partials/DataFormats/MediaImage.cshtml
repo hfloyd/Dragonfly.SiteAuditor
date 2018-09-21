@@ -1,0 +1,40 @@
+@using Dragonfly.UmbracoModels.Helpers
+@using Dragonfly.Umbraco7Helpers
+@using Umbraco.Core.Logging
+@using Umbraco.Core.Services
+
+@model IPublishedProperty
+
+@{
+    var fancyFormat = Mvc.GetSafeViewDataBool(ViewData, "FancyFormat", true);
+    var imageWidth = Mvc.GetSafeViewDataInt(ViewData, "ImageWidth", 300);
+    var umbracoHelper = new UmbracoHelper(UmbracoContext.Current);
+
+    //if (umbHelper == null)
+    //{
+    //    var e = new NullReferenceException("The Partial View 'MediaImage' requires an UmbracoHelper passed in via ViewData with key 'UmbracoHelper'.");
+    //    throw e;
+    //}
+
+    var iPubMedia = Model.GetValue<IPublishedContent>();
+
+    var mediaImage = MediaHelper.PropertyValueToSafeImage(Model.Value, umbracoHelper, null);
+
+    if (mediaImage.Url != "")
+    {
+        if (fancyFormat)
+        {
+            var mediaPath = MediaPath(iPubMedia);
+            <img src="@mediaImage.Url" width="@imageWidth" />
+            <div>@mediaPath</div>
+            <div><small>@mediaImage.Url</small></div>
+        }
+        else
+        { @mediaImage.Url }
+}
+else
+{
+    <i>none</i>
+}
+
+}

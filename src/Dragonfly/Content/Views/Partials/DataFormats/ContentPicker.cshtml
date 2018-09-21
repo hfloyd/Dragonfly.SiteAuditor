@@ -1,0 +1,18 @@
+@using Sprott.Core.SiteAuditor.Models
+
+@model IPublishedProperty
+
+@{
+    var item = Model.GetValue<IPublishedContent>();
+
+    if (item != null)
+    {
+        <span>@item.Name (@item.DocumentTypeAlias)</span>
+    }
+    else
+    {
+        <i>No item selected</i>
+    }
+}
+
+

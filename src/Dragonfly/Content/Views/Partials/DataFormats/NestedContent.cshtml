@@ -1,0 +1,23 @@
+@using Sprott.Core.SiteAuditor.Models
+
+@model IPublishedProperty
+
+@{
+    var ncItems = Model.GetValue<IEnumerable<IPublishedContent>>().ToList();
+
+    if (ncItems.Any())
+    {
+        <ol>
+            @foreach (var item in ncItems)
+            {
+                <li>@item.Name</li>
+            }
+        </ol>
+    }
+    else
+    {
+        <i>No items added</i>
+    }
+}
+
+

@@ -1,4 +1,4 @@
-@using Sprott.Core.SiteAuditor
+@using Dragonfly.SiteAuditorHelpers
 @model IEnumerable<IPublishedContent>
 
 @{
@@ -48,7 +48,7 @@
                 @foreach (var node in Model)
                 {
                     counter++;
-                    var dtInfo = SiteAuditorHelper.GetPropertyDataTypeInfo(propertyAlias, node);
+                    var dtInfo = AuditHelper.GetPropertyDataTypeInfo(propertyAlias, node);
 
                     <tr>
                         @if (fancyFormat)

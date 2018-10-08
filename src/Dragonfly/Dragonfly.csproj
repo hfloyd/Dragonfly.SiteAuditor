@@ -15,14 +15,14 @@
     <RepositoryUrl>https://github.com/hfloyd/Dragonfly.SiteAuditor</RepositoryUrl>
     <PackageId>Dragonfly.SiteAuditor</PackageId>
     <AssemblyName>Dragonfly.SiteAuditor</AssemblyName>
-    <Version>1.1.1</Version>
+    <Version>1.3.1</Version>
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|AnyCPU'">
     <DocumentationFile>bin\Debug\net45\Dragonfly.SiteAuditor.xml</DocumentationFile>
   </PropertyGroup>
   <ItemGroup>
-    <PackageReference Include="Dragonfly.Net" Version="1.7.1" />
-    <PackageReference Include="Dragonfly.Umbraco7" Version="1.5.10" />
+    <PackageReference Include="Dragonfly.Net" Version="1.11.0" />
+    <PackageReference Include="Dragonfly.Umbraco7" Version="1.5.12" />
     <PackageReference Include="UmbracoCms.Core" Version="7.7.1" />
   </ItemGroup>
   <ItemGroup>
@@ -32,12 +32,24 @@
     <Reference Include="System.Web.Extensions" />
   </ItemGroup>
   <ItemGroup>
-    <Folder Include="Content\" />
+    <Content Include="readme.txt">
+      <Pack>true</Pack>
+      <PackagePath>\</PackagePath>
+    </Content>
+    <Content Include="Views/**/*.*">
+      <Pack>true</Pack>
+      <BuildAction>Content</BuildAction>
+      <IncludeInPackage>true</IncludeInPackage>
+      <CopyToOutput>true</CopyToOutput>
+    </Content>
   </ItemGroup>
-
+  <!--
+  <ItemGroup>
+    <None Remove="Views/Web.config" />
+  </ItemGroup>-->
   <Import Project="..\Custom.targets" />
 
   <Target Name="PostBuild" AfterTargets="PostBuildEvent">
-    <Exec Command="if $(ConfigurationName) == Debug (XCOPY /y &quot;$(TargetDir)$(TargetName).*&quot; &quot;C:\X.web\bin&quot;)" />
+    <Exec Command="REM if $(ConfigurationName) == Debug (XCOPY /y &quot;$(TargetDir)$(TargetName).*&quot; &quot;C:\X.web\bin&quot;)" />
   </Target>
 </Project>

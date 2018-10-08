@@ -1,7 +1,7 @@
 @using Dragonfly.Umbraco7Helpers
-@using Sprott.Core.SiteAuditor.Models
 
-@model IPublishedProperty
+
+@model Umbraco.Core.Models.IPublishedProperty
 
 @{
     var fancyFormat = Mvc.GetSafeViewDataBool(ViewData, "FancyFormat", true);
@@ -14,7 +14,7 @@
         {
             foreach (var tag in tagData)
             {
-                var tagUrl = Dragonfly.NetHelpers.Url.AppendQueryStringToUrl(Request.RawUrl, tagFilterName, tag);
+                var tagUrl = Dragonfly.NetHelpers.Url.AppendQueryStringToUrl(Request.Url, tagFilterName, tag);
 
                 <a href="@tagUrl"><span class="label label-primary">@tag</span></a>
             }
@@ -29,7 +29,7 @@
     {
         if (fancyFormat)
         {
-            var tagUrl = Dragonfly.NetHelpers.Url.AppendQueryStringToUrl(Request.RawUrl, tagFilterName, "none");
+            var tagUrl = Dragonfly.NetHelpers.Url.AppendQueryStringToUrl(Request.Url, tagFilterName, "none");
 
             <a href="@tagUrl"><span class="label label-default">none</span></a>
         }

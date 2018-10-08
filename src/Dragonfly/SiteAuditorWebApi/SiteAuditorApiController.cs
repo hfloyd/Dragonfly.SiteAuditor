@@ -132,6 +132,7 @@
         [System.Web.Http.AcceptVerbs("GET")]
         public HttpResponseMessage GetAllContentAsHtmlTable()
         {
+            //TODO: Use Partial View
             var returnSB = new StringBuilder();
 
             var allNodes = CollectionsHelper.GetContentNodes();
@@ -221,7 +222,7 @@
             }
             returnSB.Append(tableData);
 
-            return StringBuilderToFile(returnSB, "AllNodes.csv");
+            return Dragonfly.NetHelpers.Http.StringBuilderToFile(returnSB, "AllNodes.csv");
         }
 
         #endregion
@@ -344,7 +345,7 @@
 
             returnSB.Append(tableData);
 
-            return StringBuilderToFile(returnSB, "AllProperties.csv");
+            return Dragonfly.NetHelpers.Http.StringBuilderToFile(returnSB, "AllProperties.csv");
         }
 
         //public IHttpActionResult GetProperty(string PropertyAlias)
@@ -515,7 +516,7 @@
             }
             returnSB.Append(tableData);
 
-            return StringBuilderToFile(returnSB, "AllNodes.csv");
+            return Dragonfly.NetHelpers.Http.StringBuilderToFile(returnSB, "AllNodes.csv");
         }
 
         #endregion
@@ -599,27 +600,6 @@
 
         #endregion
 
-        #region Shared Functions
-
-        private static HttpResponseMessage StringBuilderToFile(StringBuilder StringData, string OutputFileName = "Export.csv", string MediaType = "text/csv")
-        {
-            //TODO: Need to figure out why » is returning as Â (likely an issue with unicode in general...?)
-
-            MemoryStream stream = new MemoryStream();
-            StreamWriter writer = new StreamWriter(stream);
-            writer.Write(StringData.ToString());
-            writer.Flush();
-            stream.Position = 0;
-
-            HttpResponseMessage result = new HttpResponseMessage(HttpStatusCode.OK);
-            result.Content = new StreamContent(stream);
-            result.Content.Headers.ContentType = new MediaTypeHeaderValue(MediaType);
-            result.Content.Headers.ContentDisposition =
-                new ContentDispositionHeaderValue("attachment") { FileName = OutputFileName };
-            return result;
-        }
-        #endregion
-
         #region Tests & Examples
 
         /// /Umbraco/backoffice/Api/AuthorizedApi/Test
@@ -689,7 +669,7 @@
             }
             returnSB.Append(tableData);
 
-            return StringBuilderToFile(returnSB, "Example.csv");
+            return Dragonfly.NetHelpers.Http.StringBuilderToFile(returnSB, "Example.csv");
         }
 
         /// /Umbraco/backoffice/Api/SiteAuditorApi/TestCSV
@@ -712,7 +692,7 @@
             }
             returnSB.Append(tableData);
 
-            return StringBuilderToFile(returnSB, "Test.csv");
+            return Dragonfly.NetHelpers.Http.StringBuilderToFile(returnSB, "Test.csv");
         }
 
         #endregion

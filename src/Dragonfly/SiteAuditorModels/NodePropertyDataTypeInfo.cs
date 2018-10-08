@@ -1,10 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-
-namespace Sprott.Core.SiteAuditor.Models
+﻿namespace Dragonfly.SiteAuditorModels
 {
     using Umbraco.Core.Models;
 
@@ -38,7 +32,7 @@ namespace Sprott.Core.SiteAuditor.Models
         {
             get
             {
-                if (DocTypeCompositionAlias != "")
+                if (DocTypeCompositionAlias != null && DocTypeCompositionAlias != "")
                 {
                     return true;
                 }

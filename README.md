@@ -2,6 +2,9 @@
 
 A collection of tools to extract data about an Umbraco site created by [Heather Floyd](https://www.HeatherFloyd.com).
 
+Available on NuGet: `Install-Package Dragonfly.SiteAuditor`
+
+## Usage ##
 The Tools are accessed via Umbraco's WebApi path.
 Try: 
 

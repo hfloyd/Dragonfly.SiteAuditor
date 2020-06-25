@@ -29,7 +29,7 @@
         public Guid GUID { get; set; }
         public string DefaultTemplateName { get; set; }
 
-        //TODO: Add Info about compositions/parents: IsComposition, HasCompositions, etc.
+        //TODO: Add Info about compositions/parents/folders: IsComposition, HasCompositions, etc.
 
         #endregion
 

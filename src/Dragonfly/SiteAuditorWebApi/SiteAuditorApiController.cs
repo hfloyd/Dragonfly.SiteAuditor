@@ -46,7 +46,7 @@
             returnSB.AppendLine("<ul>");
             returnSB.AppendLine("<li><a target=\"_blank\" href=\"/Umbraco/backoffice/Api/SiteAuditorApi/GetAllContentAsXml\">Get All Content As Xml</a> [no parameters]</li>");
             returnSB.AppendLine("<li><a target=\"_blank\" href=\"/Umbraco/backoffice/Api/SiteAuditorApi/GetAllContentAsJson\">Get All Content As Json</a> [no parameters]</li>");
-            returnSB.AppendLine("<li><a target=\"_blank\" href=\"/Umbraco/backoffice/Api/SiteAuditorApi/GetAllContentAsHtmlTable\">Get All Content As HtmlTable</a> [no parameters]</li>");
+            returnSB.AppendLine("<li><a target=\"_blank\" href=\"/Umbraco/backoffice/Api/SiteAuditorApi/GetAllContentAsHtml\">Get All Content As HtmlTable</a> [no parameters]</li>");
             returnSB.AppendLine("<li><a target=\"_blank\" href=\"/Umbraco/backoffice/Api/SiteAuditorApi/GetAllContentAsCsv\">Get All Content As Csv</a> [no parameters]</li>");
             returnSB.AppendLine("</ul>");
 
@@ -55,10 +55,10 @@
             returnSB.AppendLine("<h3>All DocTypes</h3>");
             //returnSB.AppendLine("<p>Note</p>");
             returnSB.AppendLine("<ul>");
-            returnSB.AppendLine("<li><a target=\"_blank\" href=\"/Umbraco/backoffice/Api/SiteAuditorApi/GetAllDocTypesAsXml\">Get All Properties As Xml</a> [no parameters]</li>");
-            returnSB.AppendLine("<li><a target=\"_blank\" href=\"/Umbraco/backoffice/Api/SiteAuditorApi/GetAllDocTypesAsJson\">Get All Properties As Json</a> [no parameters]</li>");
-            returnSB.AppendLine("<li><a target=\"_blank\" href=\"/Umbraco/backoffice/Api/SiteAuditorApi/GetAllDocTypesAsHtml\">Get All Properties As Html</a> [no parameters]</li>");
-            returnSB.AppendLine("<li><a target=\"_blank\" href=\"/Umbraco/backoffice/Api/SiteAuditorApi/GetAllDocTypesAsCsv\">Get All Properties As Csv</a> [no parameters]</li>");
+            returnSB.AppendLine("<li><a target=\"_blank\" href=\"/Umbraco/backoffice/Api/SiteAuditorApi/GetAllDocTypesAsXml\">Get All Doctypes As Xml</a> [no parameters]</li>");
+            returnSB.AppendLine("<li><a target=\"_blank\" href=\"/Umbraco/backoffice/Api/SiteAuditorApi/GetAllDocTypesAsJson\">Get All Doctypes As Json</a> [no parameters]</li>");
+            returnSB.AppendLine("<li><a target=\"_blank\" href=\"/Umbraco/backoffice/Api/SiteAuditorApi/GetAllDocTypesAsHtml\">Get All Doctypes As Html</a> [no parameters]</li>");
+            returnSB.AppendLine("<li><a target=\"_blank\" href=\"/Umbraco/backoffice/Api/SiteAuditorApi/GetAllDocTypesAsCsv\">Get All Doctypes As Csv</a> [no parameters]</li>");
             returnSB.AppendLine("</ul>");
 
             returnSB.AppendLine("<h2>Information about Document Type Properties</h2>");
@@ -438,9 +438,9 @@
             };
         }
 
-        /// /Umbraco/backoffice/Api/SiteAuditorApi/GetAllDocTypesAsHtmlTable
+        /// /Umbraco/backoffice/Api/SiteAuditorApi/GetAllDocTypesAsHtml
         [System.Web.Http.AcceptVerbs("GET")]
-        public HttpResponseMessage GetAllDocTypesAsHtmlTable()
+        public HttpResponseMessage GetAllDocTypesAsHtml()
         {
             var returnSB = new StringBuilder();
 
@@ -516,7 +516,7 @@
             }
             returnSB.Append(tableData);
 
-            return Dragonfly.NetHelpers.Http.StringBuilderToFile(returnSB, "AllNodes.csv");
+            return Dragonfly.NetHelpers.Http.StringBuilderToFile(returnSB, "AllDoctypes.csv");
         }
 
         #endregion

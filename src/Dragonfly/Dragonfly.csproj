@@ -50,6 +50,6 @@
   <Import Project="..\Custom.targets" />
 
   <Target Name="PostBuild" AfterTargets="PostBuildEvent">
-    <Exec Command="REM if $(ConfigurationName) == Debug (XCOPY /y &quot;$(TargetDir)$(TargetName).*&quot; &quot;C:\X.web\bin&quot;)" />
+    <Exec Command="REM XCOPY /y &quot;$(TargetDir)$(TargetName).*&quot; &quot;$(ProjectDir)\UmbPackage&quot;&#xD;&#xA;&#xD;&#xA;REM if $(ConfigurationName) == Debug (XCOPY /y &quot;$(TargetDir)$(TargetName).*&quot; &quot;C:\X.web\bin&quot;)" />
   </Target>
 </Project>

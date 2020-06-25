@@ -1,0 +1,43 @@
+@using Dragonfly.Umbraco7Helpers
+
+
+@model Umbraco.Core.Models.IPublishedProperty
+
+@{
+    var fancyFormat = Mvc.GetSafeViewDataBool(ViewData, "FancyFormat", true);
+    var tagFilterName = Mvc.GetSafeViewDataString(ViewData, "TagFilterName", "TagFilter");
+    var tagData = Model.GetValue<IEnumerable<string>>().ToList();
+
+    if (tagData != null && tagData.Any())
+    {
+        if (fancyFormat)
+        {
+            foreach (var tag in tagData)
+            {
+                var tagUrl = Dragonfly.NetHelpers.Url.AppendQueryStringToUrl(Request.Url, tagFilterName, tag);
+
+                <a href="@tagUrl"><span class="label label-primary">@tag</span></a>
+            }
+        }
+        else
+        {
+            <span>@string.Join(", ", tagData)</span>
+        }
+
+    }
+    else
+    {
+        if (fancyFormat)
+        {
+            var tagUrl = Dragonfly.NetHelpers.Url.AppendQueryStringToUrl(Request.Url, tagFilterName, "none");
+
+            <a href="@tagUrl"><span class="label label-default">none</span></a>
+        }
+        else
+        {
+            <i>none</i>
+        }
+    }
+}
+
+

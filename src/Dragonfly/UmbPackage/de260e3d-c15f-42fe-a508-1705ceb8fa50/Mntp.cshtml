@@ -1,0 +1,22 @@
+
+@model Umbraco.Core.Models.IPublishedProperty
+
+@{
+    var items = Model.GetValue<IEnumerable<IPublishedContent>>().ToList();
+
+    if (items.Any())
+    {
+        <ol>
+            @foreach (var item in items)
+            {
+                <li>@item.Name (@item.DocumentTypeAlias)</li>
+            }
+        </ol>
+    }
+    else
+    {
+        <i>No items added</i>
+    }
+}
+
+

@@ -1,0 +1,117 @@
+﻿<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<umbPackage>
+  <files>
+    <file>
+      <guid>Dragonfly.Net.dll</guid>
+      <orgPath>/bin</orgPath>
+      <orgName>Dragonfly.Net.dll</orgName>
+    </file>
+       <file>
+      <guid>Dragonfly.Umbraco7.dll</guid>
+      <orgPath>/bin</orgPath>
+      <orgName>Dragonfly.Umbraco7.dll</orgName>
+    </file>
+	<file>
+      <guid>Dragonfly.SiteAuditor.dll</guid>
+      <orgPath>/bin</orgPath>
+      <orgName>Dragonfly.SiteAuditor.dll</orgName>
+    </file>
+	<file>
+      <guid>AllContentAsHtmlTable.cshtml</guid>
+      <orgPath>/Views/Partials/SiteAuditor</orgPath>
+      <orgName>AllContentAsHtmlTable.cshtml</orgName>
+    </file>
+	<file>
+      <guid>ContentWithValuesTable.cshtml</guid>
+      <orgPath>/Views/Partials/SiteAuditor</orgPath>
+      <orgName>ContentWithValuesTable.cshtml</orgName>
+    </file>
+	<file>
+      <guid>ContentPicker.cshtml</guid>
+      <orgPath>/Views/Partials/SiteAuditor/DataFormats</orgPath>
+      <orgName>ContentPicker.cshtml</orgName>
+    </file>
+	<file>
+      <guid>DateValue.cshtml</guid>
+      <orgPath>/Views/Partials/SiteAuditor/DataFormats</orgPath>
+      <orgName>DateValue.cshtml</orgName>
+    </file>
+	<file>
+      <guid>DocTypeInfo.cshtml</guid>
+      <orgPath>/Views/Partials/SiteAuditor/DataFormats</orgPath>
+      <orgName>DocTypeInfo.cshtml</orgName>
+    </file>
+	<file>
+      <guid>MediaImage.cshtml</guid>
+      <orgPath>/Views/Partials/SiteAuditor/DataFormats</orgPath>
+      <orgName>MediaImage.cshtml</orgName>
+    </file>
+	<file>
+      <guid>Mntp.cshtml</guid>
+      <orgPath>/Views/Partials/SiteAuditor/DataFormats</orgPath>
+      <orgName>Mntp.cshtml</orgName>
+    </file>
+	<file>
+      <guid>NestedContent.cshtml</guid>
+      <orgPath>/Views/Partials/SiteAuditor/DataFormats</orgPath>
+      <orgName>NestedContent.cshtml</orgName>
+    </file>
+	<file>
+      <guid>NodeActions.cshtml</guid>
+      <orgPath>/Views/Partials/SiteAuditor/DataFormats</orgPath>
+      <orgName>NodeActions.cshtml</orgName>
+    </file>
+	<file>
+      <guid>PropertyDataValue.cshtml</guid>
+      <orgPath>/Views/Partials/SiteAuditor/DataFormats</orgPath>
+      <orgName>PropertyDataValue.cshtml</orgName>
+    </file>
+	<file>
+      <guid>PropertyTypeInfo.cshtml</guid>
+      <orgPath>/Views/Partials/SiteAuditor/DataFormats</orgPath>
+      <orgName>PropertyTypeInfo.cshtml</orgName>
+    </file>
+	<file>
+      <guid>Tags.cshtml</guid>
+      <orgPath>/Views/Partials/SiteAuditor/DataFormats</orgPath>
+      <orgName>Tags.cshtml</orgName>
+    </file>
+	
+  </files>
+  <info>
+    <package>
+      <name>Dragonfly Site Auditor</name>
+      <version>1.3.1</version>
+      <license url="https://github.com/hfloyd/Dragonfly.SiteAuditor/blob/master/LICENSE.md">MIT License</license>
+      <url>https://github.com/hfloyd/Dragonfly.SiteAuditor</url>
+      <requirements>
+        <major>7</major>
+        <minor>4</minor>
+        <patch>0</patch>
+      </requirements>
+    </package>
+    <author>
+      <name>Heather Floyd</name>
+      <website>https://www.heatherfloyd.com</website>
+    </author>
+    <readme><![CDATA[A collection of tools to extract data about an Umbraco site created by Heather Floyd.
+
+Available on NuGet: Install-Package Dragonfly.SiteAuditor
+
+Usage
+The Tools are accessed via Umbraco's WebApi path. Try:
+
+http://Yoursite.com/Umbraco/backoffice/Api/SiteAuditorApi/Help
+
+*NOTE: You need to be logged-in to the Umbraco back-office in order to access the tools.
+
+You can edit some of the tools' output via the Partial Views installed in /Views/Partials/SiteAuditor]]></readme>
+  </info>
+  <DocumentTypes />
+  <Templates />
+  <Stylesheets />
+  <Macros />
+  <DictionaryItems />
+  <Languages />
+  <DataTypes />
+</umbPackage>

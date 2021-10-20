@@ -1,0 +1,3 @@
+@model Dragonfly.SiteAuditor.Models.NodePropertyDataTypeInfo
+@{ var datatype = Model.DataType != null ? Model.DataType.Name : "NONE"; }
+<span>@datatype (@Model.PropertyEditorAlias [@Model.DatabaseType])</span>

@@ -1,0 +1,18 @@
+
+@using Umbraco.Web
+@model Umbraco.Core.Models.IPublishedProperty
+
+@{
+    var item = Model.GetValue<IPublishedContent>();
+
+    if (item != null)
+    {
+        <span>@item.Name (@item.DocumentTypeAlias)</span>
+    }
+    else
+    {
+        <i>No item selected</i>
+    }
+}
+
+

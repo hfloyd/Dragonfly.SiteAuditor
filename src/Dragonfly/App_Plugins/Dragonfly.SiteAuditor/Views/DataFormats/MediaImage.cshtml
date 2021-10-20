@@ -1,0 +1,37 @@
+@using Dragonfly.UmbracoModels.Helpers
+@using Dragonfly.Umbraco7Helpers
+@using Dragonfly.UmbracoModels
+@using Umbraco.Core.Logging
+@using Umbraco.Web
+
+@model Umbraco.Core.Models.IPublishedProperty
+
+@{
+    var fancyFormat = Mvc.GetSafeViewDataBool(ViewData, "FancyFormat", true);
+    var imageWidth = Mvc.GetSafeViewDataInt(ViewData, "ImageWidth", 300);
+    var umbracoHelper = new UmbracoHelper(UmbracoContext.Current);
+
+    var iPubMedia = Model.GetValue<IPublishedContent>();
+
+    var mediaImage = iPubMedia.ToMediaImage();
+
+    if (mediaImage.Url != "")
+    {
+        if (fancyFormat)
+        {
+            var mediaPath = Development.MediaPath(iPubMedia);
+            <img src="@mediaImage.Url" width="@imageWidth" />
+            <div>@mediaPath</div>
+            <div><small>@mediaImage.Url</small></div>
+        }
+        else
+        {
+            @mediaImage.Url
+        }
+    }
+    else
+    {
+        <i>none</i>
+    }
+
+}

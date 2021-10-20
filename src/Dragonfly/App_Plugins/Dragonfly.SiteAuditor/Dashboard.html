@@ -1,0 +1,212 @@
+﻿<div class="DragonflyDashboard">
+    <div>
+        <div class="umb-editor-sub-header" umb-sticky-bar="">
+            <h3><localize key="SiteAuditor_SiteAuditor">Umbraco 8 Site Auditor</localize></h3>
+        </div>
+        <!--<h4><localize key="SiteAuditor_GetStarted">Get Started</localize></h4>-->
+        <!--<p class="mt3">
+            <localize key="SiteAuditor_Instructions">The Site Tester visits all the content pages on your site and reports errors.</localize>
+        </p>-->
+        <p>
+            <i>
+                <b><localize key="SiteAuditor_Note">NOTE:</localize></b>
+                <localize key="SiteAuditor_NoteDetails">
+                    Some of these will take a long time to run for large sites. Please be patient.<br />
+                    The HTML option is interactive and searchable.
+                </localize>
+            </i>
+        </p>
+        <!-- <p class="mt3">
+            <a href="/Umbraco/backoffice/Api/SiteAuditorApi/Start" target="_blank" class="btn btn-success" style="text-decoration: none;">
+                <localize key="SiteAuditor_StartTestingButton">Start Testing / Review Past Test Results</localize>
+            </a>
+        </p>-->
+        <div class="umb-table">
+
+            <div class="umb-table-head">
+                <div class="umb-table-row">
+                    <div class="umb-table-cell not-fixed flx-s1 flx-g1 flx-b2">Entity</div>
+                    <div class="umb-table-cell not-fixed flx-s1 flx-g1 flx-b3"></div>
+                    <div class="umb-table-cell flx-s1 flx-g1">HTML</div>
+                    <div class="umb-table-cell flx-s1 flx-g1">JSON</div>
+                    <div class="umb-table-cell flx-s1 flx-g1">XML</div>
+                    <div class="umb-table-cell flx-s1 flx-g1">CSV</div>
+                </div>
+            </div>
+
+            <div class="umb-table-body">
+
+                <div class="umb-table-row">
+                    <div class="umb-table-cell not-fixed flx-s1 flx-g1 flx-b2">All Content Nodes</div>
+                    <div class="umb-table-cell not-fixed flx-s1 flx-g1 flx-b3"></div>
+                    <div class="umb-table-cell flx-s1 flx-g1"><span class="btn btn-default umb-button--xs"><a target="_blank" href="/Umbraco/backoffice/Api/SiteAuditorApi/GetAllContentAsHtmlTable">HTML</a></span></div>
+                    <div class="umb-table-cell flx-s1 flx-g1"><span class="btn btn-default umb-button--xs"><a target="_blank" href="/Umbraco/backoffice/Api/SiteAuditorApi/GetAllContentAsJson">JSON</a></span></div>
+                    <div class="umb-table-cell flx-s1 flx-g1"><span class="btn btn-default umb-button--xs"><a target="_blank" href="/Umbraco/backoffice/Api/SiteAuditorApi/GetAllContentAsXml">XML</a></span></div>
+                    <div class="umb-table-cell flx-s1 flx-g1"><span class="btn btn-default umb-button--xs"><a target="_blank" href="/Umbraco/backoffice/Api/SiteAuditorApi/GetAllContentAsCsv">CSV</a></span></div>
+                </div>
+
+                <div class="umb-table-row">
+                    <div class="umb-table-cell not-fixed flx-s1 flx-g1 flx-b2">Content Nodes For Doctype</div>
+                    <div class="umb-table-cell not-fixed flx-s1 flx-g1 flx-b3"></div>
+                    <div class="umb-table-cell flx-s1 flx-g1"><span class="btn btn-default umb-button--xs"><a target="_blank" href="/Umbraco/backoffice/Api/SiteAuditorApi/GetContentForDoctypeHtml">HTML</a></span></div>
+                    <div class="umb-table-cell flx-s1 flx-g1"></div>
+                    <div class="umb-table-cell flx-s1 flx-g1"></div>
+                    <div class="umb-table-cell flx-s1 flx-g1"></div>
+                </div>
+
+                <div class="umb-table-row">
+                    <div class="umb-table-cell not-fixed flx-s1 flx-g1 flx-b2">Content Nodes with Property Data</div>
+                    <div class="umb-table-cell not-fixed flx-s1 flx-g1 flx-b3"></div>
+                    <div class="umb-table-cell flx-s1 flx-g1"><span class="btn btn-default umb-button--xs"><a target="_blank" href="/Umbraco/backoffice/Api/SiteAuditorApi/GetContentWithValues">HTML</a></span></div>
+                    <div class="umb-table-cell flx-s1 flx-g1"></div>
+                    <div class="umb-table-cell flx-s1 flx-g1"></div>
+                    <div class="umb-table-cell flx-s1 flx-g1"></div>
+                </div>
+
+                <div class="umb-table-row">
+                    <div class="umb-table-cell not-fixed flx-s1 flx-g1 flx-b2">All Document Types</div>
+                    <div class="umb-table-cell not-fixed flx-s1 flx-g1 flx-b3"></div>
+                    <div class="umb-table-cell flx-s1 flx-g1"><span class="btn btn-default umb-button--xs"><a target="_blank" href="/Umbraco/backoffice/Api/SiteAuditorApi/GetAllDocTypesAsHtmlTable">HTML</a></span></div>
+                    <div class="umb-table-cell flx-s1 flx-g1"><span class="btn btn-default umb-button--xs"><a target="_blank" href="/Umbraco/backoffice/Api/SiteAuditorApi/GetAllDocTypesAsJson">JSON</a></span></div>
+                    <div class="umb-table-cell flx-s1 flx-g1"><span class="btn btn-default umb-button--xs"><a target="_blank" href="/Umbraco/backoffice/Api/SiteAuditorApi/GetAllDocTypesAsXml">XML</a></span></div>
+                    <div class="umb-table-cell flx-s1 flx-g1"><span class="btn btn-default umb-button--xs"><a target="_blank" href="/Umbraco/backoffice/Api/SiteAuditorApi/GetAllDocTypesAsCsv">CSV</a></span></div>
+                </div>
+
+                <div class="umb-table-row">
+                    <div class="umb-table-cell not-fixed flx-s1 flx-g1 flx-b2">All DocType Properties</div>
+                    <div class="umb-table-cell not-fixed flx-s1 flx-g1 flx-b3"></div>
+                    <div class="umb-table-cell flx-s1 flx-g1"><span class="btn btn-default umb-button--xs"><a target="_blank" href="/Umbraco/backoffice/Api/SiteAuditorApi/GetAllPropertiesAsHtmlTable">HTML</a></span></div>
+                    <div class="umb-table-cell flx-s1 flx-g1"><span class="btn btn-default umb-button--xs"><a target="_blank" href="/Umbraco/backoffice/Api/SiteAuditorApi/GetAllPropertiesAsJson">JSON</a></span></div>
+                    <div class="umb-table-cell flx-s1 flx-g1"><span class="btn btn-default umb-button--xs"><a target="_blank" href="/Umbraco/backoffice/Api/SiteAuditorApi/GetAllPropertiesAsXml">XML</a></span></div>
+                    <div class="umb-table-cell flx-s1 flx-g1"><span class="btn btn-default umb-button--xs"><a target="_blank" href="/Umbraco/backoffice/Api/SiteAuditorApi/GetAllPropertiesAsCsv">CSV</a></span></div>
+                </div>
+
+                <div class="umb-table-row">
+                    <div class="umb-table-cell not-fixed flx-s1 flx-g1 flx-b2">Single DocType's Properties</div>
+                    <div class="umb-table-cell not-fixed flx-s1 flx-g1 flx-b3"></div>
+                    <div class="umb-table-cell flx-s1 flx-g1"><span class="btn btn-default umb-button--xs"><a target="_blank" href="/Umbraco/backoffice/Api/SiteAuditorApi/GetPropertiesForDoctypeHtml">HTML</a></span></div>
+                    <div class="umb-table-cell flx-s1 flx-g1"></div>
+                    <div class="umb-table-cell flx-s1 flx-g1"></div>
+                    <div class="umb-table-cell flx-s1 flx-g1"></div>
+                </div>
+
+                <div class="umb-table-row">
+                    <div class="umb-table-cell not-fixed flx-s1 flx-g1 flx-b2">All DataTypes</div>
+                    <div class="umb-table-cell not-fixed flx-s1 flx-g1 flx-b3"></div>
+                    <div class="umb-table-cell flx-s1 flx-g1"><span class="btn btn-default umb-button--xs"><a target="_blank" href="/Umbraco/backoffice/Api/SiteAuditorApi/GetAllDataTypesAsHtmlTable">HTML</a></span></div>
+                    <div class="umb-table-cell flx-s1 flx-g1"><span class="btn btn-default umb-button--xs"><a target="_blank" href="/Umbraco/backoffice/Api/SiteAuditorApi/GetAllDataTypesAsJson">JSON</a></span></div>
+                    <div class="umb-table-cell flx-s1 flx-g1"><span class="btn btn-default umb-button--xs"><a target="_blank" href="/Umbraco/backoffice/Api/SiteAuditorApi/GetAllDataTypesAsXml">XML</a></span></div>
+                    <div class="umb-table-cell flx-s1 flx-g1"><span class="btn btn-default umb-button--xs"><a target="_blank" href="/Umbraco/backoffice/Api/SiteAuditorApi/GetAllDataTypesAsCsv">CSV</a></span></div>
+                </div>
+
+                <div class="umb-table-row">
+                    <div class="umb-table-cell not-fixed flx-s1 flx-g1 flx-b2">All Templates</div>
+                    <div class="umb-table-cell not-fixed flx-s1 flx-g1 flx-b3"></div>
+                    <div class="umb-table-cell flx-s1 flx-g1"><span class="btn btn-default umb-button--xs"><a target="_blank" href="/Umbraco/backoffice/Api/SiteAuditorApi/GetAllTemplatesAsHtmlTable">HTML</a></span></div>
+                    <div class="umb-table-cell flx-s1 flx-g1"><span class="btn btn-default umb-button--xs"><a target="_blank" href="/Umbraco/backoffice/Api/SiteAuditorApi/GetAllTemplatesAsJson">JSON</a></span></div>
+                    <div class="umb-table-cell flx-s1 flx-g1"><span class="btn btn-default umb-button--xs"><a target="_blank" href="/Umbraco/backoffice/Api/SiteAuditorApi/GetAllTemplatesAsXml">XML</a></span></div>
+                    <div class="umb-table-cell flx-s1 flx-g1"><span class="btn btn-default umb-button--xs"><a target="_blank" href="/Umbraco/backoffice/Api/SiteAuditorApi/GetAllTemplatesAsCsv">CSV</a></span></div>
+                </div>
+
+                <div class="umb-table-row">
+                    <div class="umb-table-cell not-fixed flx-s1 flx-g1 flx-b2">Template Usage</div>
+                    <div class="umb-table-cell not-fixed flx-s1 flx-g1 flx-b3"><small>Qty of Pages Using Templates + Templates Not In Use</small></div>
+                    <div class="umb-table-cell flx-s1 flx-g1"><span class="btn btn-default umb-button--xs"><a target="_blank" href="/Umbraco/backoffice/Api/SiteAuditorApi/TemplateUsageReport">HTML</a></span></div>
+                    <div class="umb-table-cell flx-s1 flx-g1"></div>
+                    <div class="umb-table-cell flx-s1 flx-g1"></div>
+                    <div class="umb-table-cell flx-s1 flx-g1"></div>
+                </div>
+                <!--
+            <div class="umb-table-row">
+                <div class="umb-table-cell not-fixed flx-s1 flx-g1 flx-b2">Entity</div>
+                <div class="umb-table-cell not-fixed flx-s1 flx-g1 flx-b3"></div>
+                <div class="umb-table-cell flx-s1 flx-g1"><span class="btn btn-default umb-button--xs">HTML</span></div>
+                <div class="umb-table-cell flx-s1 flx-g1"><span class="btn btn-default umb-button--xs">JSON</span></div>
+                <div class="umb-table-cell flx-s1 flx-g1"><span class="btn btn-default umb-button--xs">XML</span></div>
+                <div class="umb-table-cell flx-s1 flx-g1"><span class="btn btn-default umb-button--xs">CSV</span></div>
+            </div>
+
+            <div class="umb-table-row">
+                <div class="umb-table-cell not-fixed flx-s1 flx-g1 flx-b2">Entity</div>
+                <div class="umb-table-cell not-fixed flx-s1 flx-g1 flx-b3"></div>
+                <div class="umb-table-cell flx-s1 flx-g1"><span class="btn btn-default umb-button--xs">HTML</span></div>
+                <div class="umb-table-cell flx-s1 flx-g1"><span class="btn btn-default umb-button--xs">JSON</span></div>
+                <div class="umb-table-cell flx-s1 flx-g1"><span class="btn btn-default umb-button--xs">XML</span></div>
+                <div class="umb-table-cell flx-s1 flx-g1"><span class="btn btn-default umb-button--xs">CSV</span></div>
+            </div>
+
+            <div class="umb-table-row">
+                <div class="umb-table-cell not-fixed flx-s1 flx-g1 flx-b2">Entity</div>
+                <div class="umb-table-cell not-fixed flx-s1 flx-g1 flx-b3"></div>
+                <div class="umb-table-cell flx-s1 flx-g1"><span class="btn btn-default umb-button--xs">HTML</span></div>
+                <div class="umb-table-cell flx-s1 flx-g1"><span class="btn btn-default umb-button--xs">JSON</span></div>
+                <div class="umb-table-cell flx-s1 flx-g1"><span class="btn btn-default umb-button--xs">XML</span></div>
+                <div class="umb-table-cell flx-s1 flx-g1"><span class="btn btn-default umb-button--xs">CSV</span></div>
+            </div>
+    -->
+            </div>
+
+        </div>
+
+    </div>
+    <!--
+    <h4><localize key="SiteAuditor_Content">Content</localize></h4>
+
+    <h5>All Content Nodes</h5>
+    <p>These will take a long time to run for large sites. Please be patient.</p>
+    <ul>
+        <li><a target="_blank" href="/Umbraco/backoffice/Api/SiteAuditorApi/GetAllContentAsXml">Get All Content As Xml</a> </li>
+        <li><a target="_blank" href="/Umbraco/backoffice/Api/SiteAuditorApi/GetAllContentAsJson">Get All Content As Json</a> </li>
+        <li><a target="_blank" href="/Umbraco/backoffice/Api/SiteAuditorApi/GetAllContentAsHtmlTable">Get All Content As HtmlTable</a> </li>
+        <li><a target="_blank" href="/Umbraco/backoffice/Api/SiteAuditorApi/GetAllContentAsCsv">Get All Content As Csv</a> </li>
+    </ul>
+
+    <h5>Content Nodes with Property Data</h5>
+    <ul>
+        <li><a target="_blank" href="/Umbraco/backoffice/Api/SiteAuditorApi/GetContentWithValues">Get Content With Values</a></li>
+    </ul>
+
+    <hr />
+    <h4><localize key="SiteAuditor_DocumentTypes">Document Types</localize></h4>
+
+    <h5>All DocTypes</h5>
+    <ul>
+        <li><a target="_blank" href="/Umbraco/backoffice/Api/SiteAuditorApi/GetAllDocTypesAsXml">Get All Doctypes As Xml</a> </li>
+        <li><a target="_blank" href="/Umbraco/backoffice/Api/SiteAuditorApi/GetAllDocTypesAsJson">Get All Doctypes As Json</a> </li>
+        <li><a target="_blank" href="/Umbraco/backoffice/Api/SiteAuditorApi/GetAllDocTypesAsHtmlTable">Get All Doctypes As Html</a> </li>
+        <li><a target="_blank" href="/Umbraco/backoffice/Api/SiteAuditorApi/GetAllDocTypesAsCsv">Get All Doctypes As Csv</a> </li>
+    </ul>
+
+    <h5>All DocType Properties</h5>
+    <ul>
+        <li><a target="_blank" href="/Umbraco/backoffice/Api/SiteAuditorApi/GetAllPropertiesAsXml">Get All Properties As Xml</a> </li>
+        <li><a target="_blank" href="/Umbraco/backoffice/Api/SiteAuditorApi/GetAllPropertiesAsJson">Get All Properties As Json</a> </li>
+        <li><a target="_blank" href="/Umbraco/backoffice/Api/SiteAuditorApi/GetAllPropertiesAsHtmlTable">Get All Properties As Html</a> </li>
+        <li><a target="_blank" href="/Umbraco/backoffice/Api/SiteAuditorApi/GetAllPropertiesAsCsv">Get All Properties As Csv</a> </li>
+    </ul>
+
+    <hr />
+    <h4><localize key="SiteAuditor_DataTypes">Data Types</localize></h4>
+
+    <h5>All DataTypes</h5>
+    <ul>
+        <li><a target="_blank" href="/Umbraco/backoffice/Api/SiteAuditorApi/GetAllDataTypesAsXml">Get All DataTypes As Xml</a> </li>
+        <li><a target="_blank" href="/Umbraco/backoffice/Api/SiteAuditorApi/GetAllDataTypesAsJson">Get All DataTypes As Json</a> </li>
+        <li><a target="_blank" href="/Umbraco/backoffice/Api/SiteAuditorApi/GetAllDataTypesAsHtmlTable">Get All DataTypes As Html</a> </li>
+        <li><a target="_blank" href="/Umbraco/backoffice/Api/SiteAuditorApi/GetAllDataTypesAsCsv">Get All DataTypes As Csv</a> </li>
+    </ul>
+
+    <hr />
+    <h4><localize key="SiteAuditor_AdditionalReports">Additional Reports</localize></h4>
+
+    <ul>
+        <li><a target="_blank" href="/Umbraco/backoffice/Api/SiteAuditorApi/TemplateUsageReport">Template Usage</a> (Qty of Pages Using Templates + Templates Not In Use) </li>
+     </ul>
+    -->
+
+
+    <p class="mt5">
+        <small><localize key="SiteAuditor_MoreInfo">For more information and updates</localize> : <a href="https://github.com/hfloyd/Dragonfly.Umbraco8SiteAuditor" target="_blank">Dragonfly.Umbraco8SiteAuditor</a> </small>
+    </p>
+</div>
+</div>

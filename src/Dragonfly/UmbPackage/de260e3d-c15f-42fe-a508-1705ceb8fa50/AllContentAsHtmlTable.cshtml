@@ -1,7 +1,7 @@
 @using System.Web.Mvc.Html
-@using Dragonfly.SiteAuditorHelpers
+@using Dragonfly.SiteAuditor.Helpers
 @using Umbraco.Web
-@model IEnumerable<Dragonfly.SiteAuditorModels.AuditableContent>
+@model IEnumerable<Dragonfly.SiteAuditor.Models.AuditableContent>
 
 @{
     //TODO: Finish this
@@ -68,15 +68,15 @@
 
                             //Actions
                             <td>
-                                @{ Html.RenderPartial("/Views/Partials/SiteAuditor/DataFormats/NodeActions.cshtml", node.UmbPublishedNode); }
+                                @{ Html.RenderPartial("~/App_Plugins/Dragonfly.SiteAuditor/Views/DataFormats/NodeActions.cshtml", node.UmbPublishedNode); }
                             </td>
                         }
 
                         @*//DocType*@
-                        <td>@{Html.RenderPartial("/Views/Partials/SiteAuditor/DataFormats/DocTypeInfo.cshtml", dtInfo);}</td>
+                        <td>@{Html.RenderPartial("~/App_Plugins/Dragonfly.SiteAuditor/Views/DataFormats/DocTypeInfo.cshtml", dtInfo);}</td>
 
                         @*//PropertyAlias Type*@
-                        <td>@{Html.RenderPartial("/Views/Partials/SiteAuditor/DataFormats/PropertyTypeInfo.cshtml", dtInfo);}</td>
+                        <td>@{Html.RenderPartial("~/App_Plugins/Dragonfly.SiteAuditor/Views/DataFormats/PropertyTypeInfo.cshtml", dtInfo);}</td>
 
                         @*//Node ID*@
                         <td>@node.UmbContentNode.Id</td>
@@ -87,7 +87,7 @@
                         @*//PropertyAlias Value*@
                         @if (dtInfo.DataType != null)
                         {
-                            <td>@{ Html.RenderPartial("/Views/Partials/SiteAuditor/DataFormats/PropertyDataValue.cshtml", dtInfo);}</td>
+                            <td>@{ Html.RenderPartial("~/App_Plugins/Dragonfly.SiteAuditor/Views/DataFormats/PropertyDataValue.cshtml", dtInfo);}</td>
                         }
                         else
                         {
@@ -96,7 +96,7 @@
                         }
 
                         @*//Date Last Updated*@
-                            <td>@{ Html.RenderPartial("/Views/Partials/SiteAuditor/DataFormats/DateValue.cshtml", node.UmbContentNode.UpdateDate);}</td>
+                            <td>@{ Html.RenderPartial("~/App_Plugins/Dragonfly.SiteAuditor/Views/DataFormats/DateValue.cshtml", node.UmbContentNode.UpdateDate);}</td>
 
                     </tr>
                 }

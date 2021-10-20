@@ -1,8 +1,0 @@
-@model Umbraco.Core.Models.IPublishedContent
-    
-<a href="/umbraco#/content/content/edit/@Model.Id" target="_blank">Edit</a>
-
-@if (Model.Url != "")
-{
-    <span> | </span><a href="@Model.Url" target="_blank">View</a>
-}

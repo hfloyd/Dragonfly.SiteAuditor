@@ -1,0 +1,22 @@
+@using Dragonfly.SiteAuditor.Models
+
+@model AuditableContent
+@{
+    AuditableContent content = Model;
+}
+
+<a href="/umbraco#/content/content/edit/@content.UmbContentNode.Id" target="_blank">Edit</a>
+
+@if (content.IsPublished)
+{
+    try
+    {
+        <span> | </span><a href="@content.UmbPublishedNode.Url" target="_blank">View</a>
+    }
+    catch (Exception e)
+    {
+        <span> | [Error - No Published Url]</span>
+        <!-- Exception: @e.Message  -->
+    }
+   
+}

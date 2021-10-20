@@ -9,21 +9,22 @@
     <Company></Company>
     <Product>Dragonfly</Product>
     <Description>A collection of tools to extract data about an Umbraco site.
-(Dependency on UmbracoCms.Core - min 7.7.1)</Description>
+(Dependency on UmbracoCms.Core - min 7.6.0)</Description>
     <PackageLicenseUrl>https://github.com/hfloyd/Dragonfly.SiteAuditor/blob/master/LICENSE.md</PackageLicenseUrl>
     <PackageProjectUrl>https://github.com/hfloyd/Dragonfly.SiteAuditor</PackageProjectUrl>
     <RepositoryUrl>https://github.com/hfloyd/Dragonfly.SiteAuditor</RepositoryUrl>
     <PackageId>Dragonfly.SiteAuditor</PackageId>
     <AssemblyName>Dragonfly.SiteAuditor</AssemblyName>
-    <Version>1.3.1</Version>
+    <Version>1.4.4</Version>
+    <PackageReleaseNotes></PackageReleaseNotes>
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|AnyCPU'">
     <DocumentationFile>bin\Debug\net45\Dragonfly.SiteAuditor.xml</DocumentationFile>
   </PropertyGroup>
   <ItemGroup>
-    <PackageReference Include="Dragonfly.Net" Version="1.21.1" />
-    <PackageReference Include="Dragonfly.Umbraco7" Version="1.5.12" />
-    <PackageReference Include="UmbracoCms.Core" Version="7.7.1" />
+    <PackageReference Include="Dragonfly.Net" Version="1.30.0" />
+    <PackageReference Include="Dragonfly.Umbraco7" Version="2.6.1" />
+    <PackageReference Include="UmbracoCms.Core" Version="7.6.0" PrivateAssets="All" />
   </ItemGroup>
   <ItemGroup>
     <Reference Include="Microsoft.CSharp" />
@@ -32,6 +33,18 @@
     <Reference Include="System.Web.Extensions" />
   </ItemGroup>
   <ItemGroup>
+    <Content Include="App_Plugins\Dragonfly.SiteAuditor\Views\AllContentAsHtmlTable.cshtml" />
+    <Content Include="App_Plugins\Dragonfly.SiteAuditor\Views\ContentWithValuesTable.cshtml" />
+    <Content Include="App_Plugins\Dragonfly.SiteAuditor\Views\DataFormats\ContentPicker.cshtml" />
+    <Content Include="App_Plugins\Dragonfly.SiteAuditor\Views\DataFormats\DateValue.cshtml" />
+    <Content Include="App_Plugins\Dragonfly.SiteAuditor\Views\DataFormats\DocTypeInfo.cshtml" />
+    <Content Include="App_Plugins\Dragonfly.SiteAuditor\Views\DataFormats\MediaImage.cshtml" />
+    <Content Include="App_Plugins\Dragonfly.SiteAuditor\Views\DataFormats\Mntp.cshtml" />
+    <Content Include="App_Plugins\Dragonfly.SiteAuditor\Views\DataFormats\NestedContent.cshtml" />
+    <Content Include="App_Plugins\Dragonfly.SiteAuditor\Views\DataFormats\NodeActions.cshtml" />
+    <Content Include="App_Plugins\Dragonfly.SiteAuditor\Views\DataFormats\PropertyDataValue.cshtml" />
+    <Content Include="App_Plugins\Dragonfly.SiteAuditor\Views\DataFormats\PropertyTypeInfo.cshtml" />
+    <Content Include="App_Plugins\Dragonfly.SiteAuditor\Views\DataFormats\Tags.cshtml" />
     <Content Include="readme.txt">
       <Pack>true</Pack>
       <PackagePath>\</PackagePath>
@@ -50,6 +63,6 @@
   <Import Project="..\Custom.targets" />
 
   <Target Name="PostBuild" AfterTargets="PostBuildEvent">
-    <Exec Command="REM XCOPY /y &quot;$(TargetDir)$(TargetName).*&quot; &quot;$(ProjectDir)\UmbPackage&quot;&#xD;&#xA;&#xD;&#xA;REM if $(ConfigurationName) == Debug (XCOPY /y &quot;$(TargetDir)$(TargetName).*&quot; &quot;C:\X.web\bin&quot;)" />
+    <Exec Command="REM XCOPY /y &quot;$(TargetDir)$(TargetName).*&quot; &quot;$(ProjectDir)\UmbPackage&quot;&#xD;&#xA;&#xD;&#xA;REM XCOPY /y &quot;$(TargetDir)$(TargetName).*&quot; &quot;C:\Users\Heather\NAS Folders\Active Projects\Webs\Clients\CENT\sourcecode\CentricHealthGp.Web\bin&quot;&#xD;&#xA;XCOPY /s /r /y &quot;$(ProjectDir)\App_Plugins&quot; &quot;C:\Users\Heather\NAS Folders\Active Projects\Webs\Clients\CENT\sourcecode\CentricHealthGp.Web\App_Plugins&quot;" />
   </Target>
 </Project>

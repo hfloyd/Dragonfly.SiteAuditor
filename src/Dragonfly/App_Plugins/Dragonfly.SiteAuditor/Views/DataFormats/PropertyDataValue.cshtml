@@ -1,8 +1,4 @@
 
-@using System.Web.Mvc
-@using System.Web.Mvc.Html
-@using Umbraco.Core.Models
-@using Umbraco.Web
 @model Dragonfly.SiteAuditor.Models.NodePropertyDataTypeInfo
 
 @{
@@ -16,27 +12,27 @@
     switch (editor)
     {
         case "Umbraco.NestedContent":
-            Html.RenderPartial("~/App_Plugins/Dragonfly.SiteAuditor/Views/DataFormats/NestedContent.cshtml", Model.Property);
+            Html.RenderPartial("/App_Plugins/Dragonfly.SiteAuditor/Views/DataFormats/NestedContent.cshtml", Model.Property);
             renderingDone = true;
             break;
 
         case "Our.Umbraco.NestedContent":
-            Html.RenderPartial("~/App_Plugins/Dragonfly.SiteAuditor/Views/DataFormats/NestedContent.cshtml", Model.Property);
+            Html.RenderPartial("/App_Plugins/Dragonfly.SiteAuditor/Views/DataFormats/NestedContent.cshtml", Model.Property);
             renderingDone = true;
             break;
 
         case "Umbraco.MultiNodeTreePicker2":
-            Html.RenderPartial("~/App_Plugins/Dragonfly.SiteAuditor/Views/DataFormats/Mntp.cshtml", Model.Property);
+            Html.RenderPartial("/App_Plugins/Dragonfly.SiteAuditor/Views/DataFormats/Mntp.cshtml", Model.Property);
             renderingDone = true;
             break;
 
         case "Umbraco.ContentPicker2":
-            Html.RenderPartial("~/App_Plugins/Dragonfly.SiteAuditor/Views/DataFormats/ContentPicker.cshtml", Model.Property);
+            Html.RenderPartial("/App_Plugins/Dragonfly.SiteAuditor/Views/DataFormats/ContentPicker.cshtml", Model.Property);
             renderingDone = true;
             break;
 
         case "Tags":
-            Html.RenderPartial("~/App_Plugins/Dragonfly.SiteAuditor/Views/DataFormats/Tags.cshtml", Model.Property);
+            Html.RenderPartial("/App_Plugins/Dragonfly.SiteAuditor/Views/DataFormats/Tags.cshtml", Model.Property);
             renderingDone = true;
             break;
 
@@ -44,7 +40,7 @@
             var mediaImageVdd = new ViewDataDictionary();
             mediaImageVdd.Add("ImageWidth", 300);
 
-            Html.RenderPartial("~/App_Plugins/Dragonfly.SiteAuditor/Views/DataFormats/MediaImage.cshtml", Model.Property, mediaImageVdd);
+            Html.RenderPartial("/App_Plugins/Dragonfly.SiteAuditor/Views/DataFormats/MediaImage.cshtml", Model.Property, mediaImageVdd);
             renderingDone = true;
             break;
 
@@ -54,7 +50,7 @@
     switch (dbType)
     {
         case DataTypeDatabaseType.Date:
-            Html.RenderPartial("~/App_Plugins/Dragonfly.SiteAuditor/Views/DataFormats/DateValue.cshtml", Model.Property.GetValue<DateTime>());
+            Html.RenderPartial("/App_Plugins/Dragonfly.SiteAuditor/Views/DataFormats/DateValue.cshtml", Model.Property.GetValue<DateTime>());
             renderingDone = true;
             break;
 
@@ -85,5 +81,3 @@
         <span>@formattedValue</span>
     }
 }
-
-

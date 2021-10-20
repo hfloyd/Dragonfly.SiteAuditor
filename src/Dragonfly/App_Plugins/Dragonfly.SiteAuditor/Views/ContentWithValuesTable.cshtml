@@ -1,7 +1,5 @@
-@using System.Web.Mvc.Html
 @using Dragonfly.SiteAuditor.Helpers
-@using Umbraco.Web
-@model IEnumerable<Umbraco.Core.Models.IPublishedContent>
+@model IEnumerable<IPublishedContent>
 
 @{
     var fancyFormat = true;
@@ -60,15 +58,15 @@
 
                             //Actions
                             <td>
-                                @{ Html.RenderPartial("~/App_Plugins/Dragonfly.SiteAuditor/Views/DataFormats/NodeActions.cshtml", node); }
+                                @{ Html.RenderPartial("/App_Plugins/Dragonfly.SiteAuditor/Views/DataFormats/NodeActions.cshtml", node); }
                             </td>
                         }
 
                         @*//DocType*@
-                        <td>@{Html.RenderPartial("~/App_Plugins/Dragonfly.SiteAuditor/Views/DataFormats/DocTypeInfo.cshtml", dtInfo);}</td>
+                        <td>@{Html.RenderPartial("/App_Plugins/Dragonfly.SiteAuditor/Views/DataFormats/DocTypeInfo.cshtml", dtInfo);}</td>
 
                         @*//PropertyAlias Type*@
-                        <td>@{Html.RenderPartial("~/App_Plugins/Dragonfly.SiteAuditor/Views/DataFormats/PropertyTypeInfo.cshtml", dtInfo);}</td>
+                        <td>@{Html.RenderPartial("/App_Plugins/Dragonfly.SiteAuditor/Views/DataFormats/PropertyTypeInfo.cshtml", dtInfo);}</td>
 
                         @*//Node ID*@
                         <td>@node.Id</td>
@@ -79,16 +77,24 @@
                         @*//PropertyAlias Value*@
                         @if (dtInfo.DataType != null)
                         {
-                            <td>@{ Html.RenderPartial("~/App_Plugins/Dragonfly.SiteAuditor/Views/DataFormats/PropertyDataValue.cshtml", dtInfo);}</td>
+                            <td>@{ Html.RenderPartial("/App_Plugins/Dragonfly.SiteAuditor/Views/DataFormats/PropertyDataValue.cshtml", dtInfo);}</td>
                         }
-                        else
+                        else 
                         {
-                            var propVal = node.GetPropertyValue<string>(propertyAlias);
-                            <td>@propVal</td>
+                            var prop = node.GetProperty(propertyAlias);
+                            if (prop != null)
+                            {
+                                var propVal = prop.Value.ToString();
+                                <td>@propVal</td>
+                            }
+                            else
+                            {
+                                <td>[No Property '@propertyAlias' Available]</td>
+                            }
                         }
-
+                       
                         @*//Date Last Updated*@
-                            <td>@{ Html.RenderPartial("~/App_Plugins/Dragonfly.SiteAuditor/Views/DataFormats/DateValue.cshtml", node.UpdateDate);}</td>
+                            <td>@{ Html.RenderPartial("/App_Plugins/Dragonfly.SiteAuditor/Views/DataFormats/DateValue.cshtml", node.UpdateDate);}</td>
 
                     </tr>
                 }

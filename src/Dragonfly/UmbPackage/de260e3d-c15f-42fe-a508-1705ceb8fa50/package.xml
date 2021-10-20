@@ -18,62 +18,62 @@
     </file>
 	<file>
       <guid>AllContentAsHtmlTable.cshtml</guid>
-      <orgPath>/Views/Partials/SiteAuditor</orgPath>
+      <orgPath>~/App_Plugins/Dragonfly.SiteAuditor/Views</orgPath>
       <orgName>AllContentAsHtmlTable.cshtml</orgName>
     </file>
 	<file>
       <guid>ContentWithValuesTable.cshtml</guid>
-      <orgPath>/Views/Partials/SiteAuditor</orgPath>
+      <orgPath>~/App_Plugins/Dragonfly.SiteAuditor/Views</orgPath>
       <orgName>ContentWithValuesTable.cshtml</orgName>
     </file>
 	<file>
       <guid>ContentPicker.cshtml</guid>
-      <orgPath>/Views/Partials/SiteAuditor/DataFormats</orgPath>
+      <orgPath>~/App_Plugins/Dragonfly.SiteAuditor/Views/DataFormats</orgPath>
       <orgName>ContentPicker.cshtml</orgName>
     </file>
 	<file>
       <guid>DateValue.cshtml</guid>
-      <orgPath>/Views/Partials/SiteAuditor/DataFormats</orgPath>
+      <orgPath>~/App_Plugins/Dragonfly.SiteAuditor/Views/DataFormats</orgPath>
       <orgName>DateValue.cshtml</orgName>
     </file>
 	<file>
       <guid>DocTypeInfo.cshtml</guid>
-      <orgPath>/Views/Partials/SiteAuditor/DataFormats</orgPath>
+      <orgPath>~/App_Plugins/Dragonfly.SiteAuditor/Views/DataFormats</orgPath>
       <orgName>DocTypeInfo.cshtml</orgName>
     </file>
 	<file>
       <guid>MediaImage.cshtml</guid>
-      <orgPath>/Views/Partials/SiteAuditor/DataFormats</orgPath>
+      <orgPath>~/App_Plugins/Dragonfly.SiteAuditor/Views/DataFormats</orgPath>
       <orgName>MediaImage.cshtml</orgName>
     </file>
 	<file>
       <guid>Mntp.cshtml</guid>
-      <orgPath>/Views/Partials/SiteAuditor/DataFormats</orgPath>
+      <orgPath>~/App_Plugins/Dragonfly.SiteAuditor/Views/DataFormats</orgPath>
       <orgName>Mntp.cshtml</orgName>
     </file>
 	<file>
       <guid>NestedContent.cshtml</guid>
-      <orgPath>/Views/Partials/SiteAuditor/DataFormats</orgPath>
+      <orgPath>~/App_Plugins/Dragonfly.SiteAuditor/Views/DataFormats</orgPath>
       <orgName>NestedContent.cshtml</orgName>
     </file>
 	<file>
       <guid>NodeActions.cshtml</guid>
-      <orgPath>/Views/Partials/SiteAuditor/DataFormats</orgPath>
+      <orgPath>~/App_Plugins/Dragonfly.SiteAuditor/Views/DataFormats</orgPath>
       <orgName>NodeActions.cshtml</orgName>
     </file>
 	<file>
       <guid>PropertyDataValue.cshtml</guid>
-      <orgPath>/Views/Partials/SiteAuditor/DataFormats</orgPath>
+      <orgPath>~/App_Plugins/Dragonfly.SiteAuditor/Views/DataFormats</orgPath>
       <orgName>PropertyDataValue.cshtml</orgName>
     </file>
 	<file>
       <guid>PropertyTypeInfo.cshtml</guid>
-      <orgPath>/Views/Partials/SiteAuditor/DataFormats</orgPath>
+      <orgPath>~/App_Plugins/Dragonfly.SiteAuditor/Views/DataFormats</orgPath>
       <orgName>PropertyTypeInfo.cshtml</orgName>
     </file>
 	<file>
       <guid>Tags.cshtml</guid>
-      <orgPath>/Views/Partials/SiteAuditor/DataFormats</orgPath>
+      <orgPath>~/App_Plugins/Dragonfly.SiteAuditor/Views/DataFormats</orgPath>
       <orgName>Tags.cshtml</orgName>
     </file>
 	
@@ -105,7 +105,7 @@ http://Yoursite.com/Umbraco/backoffice/Api/SiteAuditorApi/Help
 
 *NOTE: You need to be logged-in to the Umbraco back-office in order to access the tools.
 
-You can edit some of the tools' output via the Partial Views installed in /Views/Partials/SiteAuditor]]></readme>
+You can edit some of the tools' output via the Partial Views installed in ~/App_Plugins/Dragonfly.SiteAuditor/Views]]></readme>
   </info>
   <DocumentTypes />
   <Templates />

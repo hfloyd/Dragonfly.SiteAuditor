@@ -1,15 +1,22 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-
-namespace Dragonfly.SiteAuditor.Models
+﻿namespace Dragonfly.SiteAuditor.Models
 {
+    using System;
+    using System.Collections.Generic;
+    using System.Linq;
+    using System.Text;
+    using System.Threading.Tasks;
+    using Umbraco.Core;
     using Umbraco.Core.Models;
+    using Umbraco.Core.Services;
+    using Umbraco.Web;
 
     public class AuditableDataType
     {
+        #region Private vars
+            private string _defaultDelimiter = " » ";
+        #endregion
+
+        #region Public Props
         public string Name { get; set; }
         public string EditorAlias { get; set; }
         public Guid Guid { get; set; }
@@ -27,7 +34,6 @@ namespace Dragonfly.SiteAuditor.Models
             get { return _defaultDelimiter; }
             internal set { _defaultDelimiter = value; }
         }
-        private string _defaultDelimiter = " » ";
 
         /// <summary>
         /// Full path to node in a single delimited string using object's default delimiter
@@ -41,6 +47,16 @@ namespace Dragonfly.SiteAuditor.Models
             }
         }
 
-   
+        public IDictionary<string, PreValue> ConfigurationDictionary { get; set; }
+  
+        public IEnumerable<string> UsesDocTypes { get; set; }
+
+        #endregion
+
+        public AuditableDataType()
+        {
+            //For conversion see: 
+            //SiteAuditorService.ConvertIDataTypeDefinitionToAuditableDataType()
+        }
     }
 }

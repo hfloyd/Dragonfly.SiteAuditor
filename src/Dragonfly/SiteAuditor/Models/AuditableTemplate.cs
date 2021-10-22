@@ -1,16 +1,24 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-
-namespace Dragonfly.SiteAuditor.Models
+﻿namespace Dragonfly.SiteAuditor.Models
 {
+    using System;
+    using System.Collections.Generic;
+    using System.Linq;
+    using System.Text;
+    using System.Threading.Tasks;
     using Umbraco.Core;
     using Umbraco.Core.Models;
+    using Umbraco.Core.Services;
+    using Umbraco.Web;
 
     public class AuditableTemplate
     {
+        #region Private vars
+
+        private string _defaultDelimiter = " » ";
+
+        #endregion
+
+        #region Public Props
         public string Name { get; set; }
         public string Alias { get; set; }
         public Guid Guid { get; set; }
@@ -23,10 +31,10 @@ namespace Dragonfly.SiteAuditor.Models
         public DateTime CreateDate { get; set; }
         public DateTime UpdateDate { get; set; }
         public string OriginalPath { get; set; }
-        public int UsedOnContent { get; set; }
+        public int? UsedOnContent { get; set; }
         public IEnumerable<IContentType> IsAllowedOn { get; set; }
         public IEnumerable<IContentType> DefaultTemplateFor { get; set; }
-
+        
 
         /// <summary>
         /// Default string used for PathAsText
@@ -37,9 +45,7 @@ namespace Dragonfly.SiteAuditor.Models
             get { return _defaultDelimiter; }
             internal set { _defaultDelimiter = value; }
         }
-
-        private string _defaultDelimiter = " » ";
-
+        
         /// <summary>
         /// Full path in a single delimited string using object's default delimiter
         /// </summary>
@@ -50,6 +56,17 @@ namespace Dragonfly.SiteAuditor.Models
                 var path = string.Join(this.DefaultDelimiter, this.FolderPath);
                 return path;
             }
+        }
+
+        public string TemplateCode { get; set; }
+        public string ViewLayout { get; set; }
+
+        #endregion
+
+        public AuditableTemplate()
+        {
+            //For conversion see: 
+            //SiteAuditorService.ConvertITemplateToAuditableTemplate()
         }
     }
 }

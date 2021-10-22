@@ -6,7 +6,7 @@
 @{
 	IEnumerable<AuditableTemplate> templates = Model.ToList();
 	//var propertyAlias = Dragonfly.UmbracoHelpers.Mvc.GetSafeViewDataString(ViewData, "PropertyAlias");
-	// var includeUnpublished = Dragonfly.UmbracoHelpers.Mvc.GetSafeViewDataBool(ViewData, "IncludeUnpublished");
+	 var IncludeContentNodesCount = Dragonfly.Umbraco7Helpers.Mvc.GetSafeViewDataBool(ViewData, "IncludeContentNodesCount");
 
 	var counter = 0;
 }
@@ -28,7 +28,11 @@
  <div class="container-full" style="margin: 0 10px;">
 
   <h1>All Templates</h1>
-  <p>Total Templates Returned: @templates.Count()</p>
+     <p>Total Templates Returned: @templates.Count()</p>
+	 
+     <div class="d-inline-flex p-2" style="padding: .5em 0;">
+         <a class="btn btn-sm btn-success mr-2" href="/Umbraco/backoffice/Api/SiteAuditorApi/GetAllTemplatesAsHtmlTable?IncludeContentNodesCount=true">Check for Template Use on Content</a>
+     </div>
 
   <table id="umbracodata" class="table table-striped table-bordered table-hover table-sm" cellspacing="0" style="width: 100%;">
    <thead>
@@ -37,13 +41,17 @@
 	 <th>Actions</th>
 	 <th>Template Name</th>
 	 <th>Alias</th>
-	 <th>Folder</th>
+        <th>Folder</th>
+        <th>View Layout</th>
 	 <th>Is Master</th>
 	 <th>Has Master</th>
 	 <th>Code Length</th>
 	 <th>Allowed On Types</th>
-	 <th>Is Default For</th>
-	 <th>Used on Content</th>
+        <th>Is Default For</th>
+		@if (IncludeContentNodesCount)
+		{
+		    <th>Used on Content</th>
+		}
 	 <th>Id</th>
 	 <th>GUID</th>
 	 <th>Create Date</th>
@@ -76,7 +84,10 @@
 		 <td>@temp.Alias</td>
 
 						@*//Folder*@
-		 <td>@temp.PathAsText</td>
+                        <td>@temp.PathAsText</td>
+						
+                        @*//View Layout*@
+                        <td>@temp.ViewLayout</td>
 
 						@*//Is Master*@
 		 <td>@temp.IsMaster</td>
@@ -106,8 +117,11 @@
 			 <td>~NONE~</td>
 						}
 
-						@*//Used on Content*@
-		 <td>@temp.UsedOnContent</td>
+                        @*//Used on Content*@
+   @if (IncludeContentNodesCount)
+   {
+       <td>@temp.UsedOnContent</td>
+   }
 		 
 						@*// ID*@
 		 <td>@temp.Id</td>
@@ -134,12 +148,16 @@
        <th>Template Name</th>
        <th>Alias</th>
        <th>Folder</th>
+       <th>View Layout</th>
        <th>Is Master</th>
        <th>Has Master</th>
        <th>Code Length</th>
        <th>Allowed On Types</th>
        <th>Is Default For</th>
+   @if (IncludeContentNodesCount)
+   {
        <th>Used on Content</th>
+   }
        <th>Id</th>
        <th>GUID</th>
        <th>Create Date</th>

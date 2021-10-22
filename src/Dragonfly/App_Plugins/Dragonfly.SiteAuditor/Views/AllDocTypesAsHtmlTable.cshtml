@@ -42,7 +42,8 @@
 	 <th>Allowed Templates</th>
 	 <th>Default Template</th>
 	 <th>Allowed Children</th>
-	 <th>Has Content Nodes?</th>
+	 <th>Qty Content Nodes?</th>
+	 <th>Has Content Nodes</th>
 	 <th>Is an Element Type?</th>
 	 <th>Is a Composition?</th>
 	 <th>Compositions Used</th>
@@ -100,11 +101,14 @@
 			 <td>~NONE~</td>
 			}
 
-			@*//Has Content Nodes?*@
-		    <td>@dt.HasContentNodes [@dt.QtyContentNodes]</td>
+			@*//Qty Content Nodes*@
+            <td>@dt.QtyContentNodes</td>
+			
+            @*//Has Content Nodes*@
+            <td>@dt.HasContentNodes</td>
 
             @*//Is an Element Type?*@
-		    <td>Unknown @* @dt.IsElement*@</td>
+		    <td>@dt.IsElement</td>
 
             @*//Is a Composition?*@
 		    <td>@dt.IsComposition</td>
@@ -145,6 +149,7 @@
 	 <th>Allowed Templates</th>
 	 <th>Default Templates</th>
 	 <th>Allowed Children</th>
+	 <th>Qty Nodes</th>
 	 <th>Has Nodes</th>
 	 <th>Is Element</th>
 	 <th>Is Comp</th>

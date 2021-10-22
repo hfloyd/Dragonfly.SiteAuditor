@@ -1,7 +1,6 @@
 @using System.Web.Mvc.Html
-@using Dragonfly.SiteAuditor.Helpers
-
 @using Dragonfly.SiteAuditor.Models;
+@using umbraco
 
 @model IEnumerable<AuditableDataType>
 
@@ -73,7 +72,14 @@
                 <td>@dt.EditorAlias</td>
 
                 @*//Configuration*@
-                <td>@dt.ConfigurationJson.Replace(",",", ")</td>
+                <td>@if (dt.ConfigurationDictionary.Any())
+                    {<ul>
+                        @foreach (var item in dt.ConfigurationDictionary)
+                        {
+                            <li>@item.Key : @(item.Value.Value!=null ? item.Value.Value.Replace(",",", "):"")</li>
+                        }</ul>
+                    }
+                </td>
 
                 @*//Used On Properties*@
                 @if (dt.UsedOnProperties.Any())

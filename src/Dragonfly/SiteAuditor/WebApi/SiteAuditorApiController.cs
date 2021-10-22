@@ -113,7 +113,7 @@
         public List<AuditableContent> GetAllContentAsXml()
         {
             var saService = GetSiteAuditorService();
-            var allNodes = saService.GetContentNodes();
+            var allNodes = saService.GetAllAuditableContent();
 
             return allNodes;
         }
@@ -125,7 +125,7 @@
             var saService = GetSiteAuditorService();
             var returnSB = new StringBuilder();
 
-            var allNodes = saService.GetContentNodes();
+            var allNodes = saService.GetAllAuditableContent();
 
             string json = JsonConvert.SerializeObject(allNodes);
 
@@ -151,7 +151,7 @@
 
             var pvPath = "/App_Plugins/Dragonfly.SiteAuditor/Views/AllContentAsHtmlTable.cshtml"; // _TesterConfig.GetAppPluginsPath() + "Views/Start.cshtml";
 
-            var allNodes = saService.GetContentNodes();
+            var allNodes = saService.GetAllAuditableContent();
 
             //VIEW DATA 
             var viewData = new ViewDataDictionary();
@@ -240,7 +240,7 @@
             var saService = GetSiteAuditorService();
             var returnSB = new StringBuilder();
 
-            var allNodes = saService.GetContentNodes();
+            var allNodes = saService.GetAllAuditableContent();
 
             var tableData = new StringBuilder();
 
@@ -308,7 +308,7 @@
 
             var pvPath = "/App_Plugins/Dragonfly.SiteAuditor/Views/AllContentAsHtmlTable.cshtml"; // _TesterConfig.GetAppPluginsPath() + "Views/Start.cshtml";
 
-            var allNodes = saService.GetContentNodes(DocTypeAlias);
+            var allNodes = saService.GetAuditableContent(DocTypeAlias);
 
             //VIEW DATA 
             var viewData = new ViewDataDictionary();
@@ -730,7 +730,7 @@
         public IEnumerable<AuditableDataType> GetAllDataTypesAsXml()
         {
             var saService = GetSiteAuditorService();
-            var dataTypes = saService.AllDataTypes();
+            var dataTypes = saService.GetAllAuditableDataTypes();
 
             return dataTypes;
         }
@@ -743,7 +743,7 @@
             var saService = GetSiteAuditorService();
             var returnSB = new StringBuilder();
 
-            var dataTypes = saService.AllDataTypes();
+            var dataTypes = saService.GetAllAuditableDataTypes();
             string json = JsonConvert.SerializeObject(dataTypes);
 
             returnSB.AppendLine(json);
@@ -768,7 +768,7 @@
             var saService = GetSiteAuditorService();
             var returnSB = new StringBuilder();
 
-            var dataTypes = saService.AllDataTypes();
+            var dataTypes = saService.GetAllAuditableDataTypes();
 
             //VIEW DATA 
             var viewData = new ViewDataDictionary();
@@ -815,7 +815,7 @@
             var saService = GetSiteAuditorService();
             var returnSB = new StringBuilder();
 
-            var dataTypes = saService.AllDataTypes();
+            var dataTypes = saService.GetAllAuditableDataTypes();
 
             var tableData = new StringBuilder();
 
@@ -889,7 +889,7 @@
         public IEnumerable<AuditableDocType> GetAllDocTypesAsXml()
         {
             var saService = GetSiteAuditorService();
-            var allDts = CollectionsHelper.GetAuditableDocTypes();
+            var allDts = saService.GetAuditableDocTypes();
 
             return allDts;
         }
@@ -901,7 +901,7 @@
             var saService = GetSiteAuditorService();
             var returnSB = new StringBuilder();
 
-            var allDts = CollectionsHelper.GetAuditableDocTypes();
+            var allDts = saService.GetAuditableDocTypes();
 
             string json = JsonConvert.SerializeObject(allDts);
 
@@ -1007,7 +1007,7 @@
             var saService = GetSiteAuditorService();
             var returnSB = new StringBuilder();
 
-            var allDts = CollectionsHelper.GetAuditableDocTypes();
+            var allDts = saService.GetAuditableDocTypes();
 
             var tableData = new StringBuilder();
 
@@ -1021,7 +1021,7 @@
                     item.Name,
                     item.Alias,
                     item.DefaultTemplateName,
-                    item.GUID,
+                    item.Guid,
                     item.ContentType.CreateDate,
                     item.ContentType.UpdateDate,
                     Environment.NewLine);
@@ -1035,23 +1035,23 @@
 
         #region Templates Info
 
-        /// /Umbraco/backoffice/Api/SiteAuditorApi/GetAllTemplatesAsXml
+        /// /Umbraco/backoffice/Api/SiteAuditorApi/GetAllTemplatesAsXml?IncludeContentNodesCount=false
         [System.Web.Http.AcceptVerbs("GET")]
-        public IEnumerable<AuditableTemplate> GetAllTemplatesAsXml()
+        public IEnumerable<AuditableTemplate> GetAllTemplatesAsXml(bool IncludeContentNodesCount = false)
         {
             var saService = GetSiteAuditorService();
-            var allTemps = saService.GetAuditableTemplates();
+            var allTemps = saService.GetAuditableTemplates(IncludeContentNodesCount);
 
             return allTemps;
         }
 
-        /// /Umbraco/backoffice/Api/SiteAuditorApi/GetAllTemplatesAsJson
+        /// /Umbraco/backoffice/Api/SiteAuditorApi/GetAllTemplatesAsJson?IncludeContentNodesCount=false
         [System.Web.Http.AcceptVerbs("GET")]
-        public HttpResponseMessage GetAllTemplatesAsJson()
+        public HttpResponseMessage GetAllTemplatesAsJson(bool IncludeContentNodesCount = false)
         {
             var saService = GetSiteAuditorService();
 
-            var allTemps = saService.GetAuditableTemplates();
+            var allTemps = saService.GetAuditableTemplates(IncludeContentNodesCount);
 
             string json = JsonConvert.SerializeObject(allTemps);
 
@@ -1065,21 +1065,21 @@
             };
         }
 
-        /// /Umbraco/backoffice/Api/SiteAuditorApi/GetAllTemplatesAsHtmlTable
+        /// /Umbraco/backoffice/Api/SiteAuditorApi/GetAllTemplatesAsHtmlTable?IncludeContentNodesCount=false
         [System.Web.Http.AcceptVerbs("GET")]
-        public HttpResponseMessage GetAllTemplatesAsHtmlTable()
+        public HttpResponseMessage GetAllTemplatesAsHtmlTable(bool IncludeContentNodesCount = false)
         {
             var returnSB = new StringBuilder();
             var saService = GetSiteAuditorService();
 
             var pvPath = "/App_Plugins/Dragonfly.SiteAuditor/Views/AllTemplatesAsHtmlTable.cshtml"; // _TesterConfig.GetAppPluginsPath() + "Views/Start.cshtml";
 
-            var allTemps = saService.GetAuditableTemplates();
+            var allTemps = saService.GetAuditableTemplates(IncludeContentNodesCount);
 
             //VIEW DATA 
             var viewData = new ViewDataDictionary();
             viewData.Model = allTemps;
-            //viewData.Add("SpecialMessage", specialMessage);
+            viewData.Add("IncludeContentNodesCount", IncludeContentNodesCount);
 
             //RENDER
             try
@@ -1114,30 +1114,30 @@
             };
         }
 
-        /// /Umbraco/backoffice/Api/SiteAuditorApi/GetAllTemplatesAsCsv
+        /// /Umbraco/backoffice/Api/SiteAuditorApi/GetAllTemplatesAsCsv?IncludeContentNodesCount=false
         [System.Web.Http.AcceptVerbs("GET")]
-        public HttpResponseMessage GetAllTemplatesAsCsv()
+        public HttpResponseMessage GetAllTemplatesAsCsv(bool IncludeContentNodesCount = false)
         {
             var saService = GetSiteAuditorService();
             var returnSB = new StringBuilder();
 
-            var allDts = saService.GetAuditableDocTypes();
+            var allTemplates = saService.GetAuditableTemplates(IncludeContentNodesCount);
 
             var tableData = new StringBuilder();
 
             tableData.AppendLine(
-                "\"Doctype Name\",\"Alias\",\"Default Template\",\"GUID\",\"Create Date\",\"Update Date\"");
+                "\"Doctype Name\",\"Alias\",\"Is a Default Template For Doctypes\",\"GUID\",\"Create Date\",\"Update Date\"");
 
-            foreach (var item in allDts)
+            foreach (var item in allTemplates)
             {
                 tableData.AppendFormat(
                     "\"{0}\",\"{1}\",\"{2}\",\"{3}\",{4},{5}{6}",
                     item.Name,
                     item.Alias,
-                    item.DefaultTemplateName,
+                    item.DefaultTemplateFor.Any(),
                     item.Guid,
-                    item.ContentType.CreateDate,
-                    item.ContentType.UpdateDate,
+                    item.CreateDate,
+                    item.UpdateDate,
                     Environment.NewLine);
             }
             returnSB.Append(tableData);

@@ -132,22 +132,22 @@
         /// Gets list of all DocTypes on site as AuditableDoctype models
         /// </summary>
         /// <returns></returns>
-        public static IEnumerable<AuditableDocType> GetAuditableDocTypes()
-        {
-            var list = new List<AuditableDocType>();
+        //public static IEnumerable<AuditableDocType> GetAuditableDocTypes()
+        //{
+        //    var list = new List<AuditableDocType>();
 
-            var doctypes = umbDocTypeService.GetAllContentTypes();
+        //    var doctypes = umbDocTypeService.GetAllContentTypes();
 
-            foreach (var type in doctypes)
-            {
-                if (type != null)
-                {
-                    list.Add(new AuditableDocType(type));
-                }
-            }
+        //    foreach (var type in doctypes)
+        //    {
+        //        if (type != null)
+        //        {
+        //            list.Add(new AuditableDocType(type));
+        //        }
+        //    }
 
-            return list;
-        }
+        //    return list;
+        //}
 
         #endregion
 

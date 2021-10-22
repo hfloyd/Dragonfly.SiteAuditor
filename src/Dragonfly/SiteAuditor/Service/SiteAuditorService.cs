@@ -2,7 +2,14 @@
 {
     using System;
     using System.Collections.Generic;
+    using System.IO;
     using System.Linq;
+    using System.Text.RegularExpressions;
+    using System.Web;
+    using System.Web.Compilation;
+    using System.Web.Mvc;
+    using System.Web.WebPages;
+    using Dragonfly.SiteAuditor.CustomHandlers;
     using Dragonfly.SiteAuditor.Helpers;
     using Dragonfly.SiteAuditor.Models;
     using Newtonsoft.Json;
@@ -36,10 +43,13 @@
         private string _defaultDelimiter = " » ";
 
         private IEnumerable<AuditableContent> _AllAuditableContent = new List<AuditableContent>();
-
-        private IEnumerable<IContent> _AllContent = new List<IContent>();
-
+        private Dictionary<int, IEnumerable<AuditableContent>> _RangeAuditableContent = new Dictionary<int, IEnumerable<AuditableContent>>();
         private IEnumerable<IContentTypeComposition> _AllContentTypeComps = new List<IContentType>();
+        private IEnumerable<IPublishedContent> _AllPublishedNodes = new List<IPublishedContent>();
+        private IEnumerable<IContent> _AllContent = new List<IContent>();
+        private IEnumerable<AuditableDataType> _AllAuditableDataTypes = new List<AuditableDataType>();
+        private Dictionary<PropertyType, string> _AllPropsWithDocTypes = new Dictionary<PropertyType, string>();
+        private Dictionary<string, IEnumerable<AuditableTemplate>> _AllAuditableTemplates = new Dictionary<string, IEnumerable<AuditableTemplate>>();
 
         #region ctor
         public SiteAuditorService()
@@ -67,36 +77,26 @@
         #region All Nodes (IPublishedContent)
 
         /// <summary>
-        /// Gets all site nodes as IPublishedContent
+        /// Gets all published site nodes as IPublishedContent
         /// </summary>
-        /// <param name="IncludeUnpublished">Should unpublished nodes be included? (They will be returned as 'virtual' IPublishedContent models)</param>
         /// <returns></returns>
-        public IEnumerable<IPublishedContent> GetAllNodes()
+        public IEnumerable<IPublishedContent> GetPublishedNodes()
         {
-            var nodesList = new List<IPublishedContent>();
-
-            //if (IncludeUnpublished)
-            //{
-            //    //Get nodes as IContent
-            //    var topLevelNodes = _services.ContentService.GetRootContent().OrderBy(n => n.SortOrder);
-
-            //    foreach (var thisNode in topLevelNodes)
-            //    {
-            //        nodesList.AddRange(LoopNodes(thisNode));
-            //    }
-            //}
-            //else
-            //{
-            //Get nodes as IPublishedContent
-            var topLevelNodes = _umbracoHelper.TypedContentAtRoot().OrderBy(n => n.SortOrder);
-
-            foreach (var thisNode in topLevelNodes)
+            if (!_AllPublishedNodes.Any())
             {
-                nodesList.AddRange(LoopNodes(thisNode));
-            }
-            // }
+                var nodesList = new List<IPublishedContent>();
 
-            return nodesList;
+                var topLevelNodes = _umbracoHelper.TypedContentAtRoot().OrderBy(n => n.SortOrder);
+
+                foreach (var thisNode in topLevelNodes)
+                {
+                    nodesList.AddRange(LoopNodes(thisNode));
+                }
+
+                _AllPublishedNodes = nodesList;
+            }
+
+            return _AllPublishedNodes.ToList();
         }
 
         private IEnumerable<IPublishedContent> LoopNodes(IPublishedContent ThisNode)
@@ -124,48 +124,28 @@
             return nodesList;
         }
 
-        //private IEnumerable<IPublishedContent> LoopNodes(IContent ThisNode)
-        //{
-        //    var nodesList = new List<IPublishedContent>();
-
-        //    //Add current node, then loop for children
-        //    try
-        //    {
-        //        nodesList.Add(ThisNode.ToPublishedContent());
-
-        //        if (ThisNode.Children().Any())
-        //        {
-        //            foreach (var childNode in ThisNode.Children().OrderBy(n => n.SortOrder))
-        //            {
-        //                nodesList.AddRange(LoopNodes(childNode));
-        //            }
-        //        }
-        //    }
-        //    catch (Exception e)
-        //    {
-        //        //skip
-        //    }
-
-        //    return nodesList;
-        //}
 
         #endregion
 
-        #region Content 
+        #region All Nodes (IContent)
 
         public List<IContent> GetAllContent()
         {
-            var nodesList = new List<IContent>();
-
-            var topLevelContentNodes = _services.ContentService.GetRootContent().OrderBy(n => n.SortOrder);
-
-            foreach (var thisNode in topLevelContentNodes)
+            if (!_AllContent.Any())
             {
-                nodesList.AddRange(LoopForContentNodes(thisNode));
+                var nodesList = new List<IContent>();
+
+                var topLevelContentNodes = _services.ContentService.GetRootContent().OrderBy(n => n.SortOrder);
+
+                foreach (var thisNode in topLevelContentNodes)
+                {
+                    nodesList.AddRange(LoopForContentNodes(thisNode));
+                }
+
+                _AllContent = nodesList;
             }
 
-            _AllContent = nodesList;
-            return nodesList;
+            return _AllContent.ToList();
         }
 
         internal List<IContent> LoopForContentNodes(IContent ThisNode)
@@ -198,24 +178,23 @@
         /// Gets all site nodes as AuditableContent models
         /// </summary>
         /// <returns></returns>
-        public List<AuditableContent> GetContentNodes()
+        public List<AuditableContent> GetAllAuditableContent()
         {
-            if (_AllAuditableContent.Any())
+            if (!_AllAuditableContent.Any())
             {
-                return _AllAuditableContent.ToList();
+                var nodesList = new List<AuditableContent>();
+
+                var topLevelContentNodes = _services.ContentService.GetRootContent().OrderBy(n => n.SortOrder);
+
+                foreach (var thisNode in topLevelContentNodes)
+                {
+                    nodesList.AddRange(LoopForAuditableContentNodes(thisNode));
+                }
+
+                _AllAuditableContent = nodesList;
             }
 
-            var nodesList = new List<AuditableContent>();
-
-            var topLevelContentNodes = _services.ContentService.GetRootContent().OrderBy(n => n.SortOrder);
-
-            foreach (var thisNode in topLevelContentNodes)
-            {
-                nodesList.AddRange(LoopForAuditableContentNodes(thisNode));
-            }
-
-            _AllAuditableContent = nodesList;
-            return nodesList;
+            return _AllAuditableContent.ToList();
         }
 
         /// <summary>
@@ -223,8 +202,17 @@
         /// </summary>
         /// <param name="RootNodeId">Integer Id of Root Node</param>
         /// <returns></returns>
-        public List<AuditableContent> GetContentNodes(int RootNodeId)
+        public List<AuditableContent> GetAuditableContent(int RootNodeId)
         {
+            if (_RangeAuditableContent.Any())
+            {
+                if (_RangeAuditableContent.ContainsKey(RootNodeId))
+                {
+                    return _RangeAuditableContent[RootNodeId].ToList();
+                }
+            }
+
+            //else calculate new range and add to global list
             var nodesList = new List<AuditableContent>();
 
             var topLevelNodes = _services.ContentService.GetByIds(RootNodeId.AsEnumerableOfOne()).OrderBy(n => n.SortOrder);
@@ -233,6 +221,8 @@
             {
                 nodesList.AddRange(LoopForAuditableContentNodes(thisNode));
             }
+
+            _RangeAuditableContent.Add(RootNodeId, nodesList);
 
             return nodesList;
         }
@@ -258,28 +248,13 @@
         //    return nodesList;
         //}
 
-        public List<AuditableContent> GetContentNodes(string DocTypeAlias)
+        public List<AuditableContent> GetAuditableContent(string DocTypeAlias)
         {
-            var nodesList = new List<AuditableContent>();
+            var allContent = GetAllAuditableContent();
 
-            IEnumerable<IContent> allContent;
-            if (_AllContent.Any())
-            {
-                allContent = _AllContent.ToList();
-            }
-            else
-            {
-                allContent = GetAllContent().ToList();
-            }
+            var filteredContent = allContent.Where(n => n.DocTypeAlias == DocTypeAlias);
 
-            var filteredContent = allContent.Where(n => n.ContentType.Alias == DocTypeAlias);
-
-            foreach (var content in filteredContent)
-            {
-                nodesList.Add(ConvertIContentToAuditableContent(content));
-            }
-
-            return nodesList;
+            return filteredContent.ToList();
         }
 
         public List<AuditableContent> GetContentWithProperty(string PropertyAlias)
@@ -319,6 +294,7 @@
             var ac = new AuditableContent();
             ac.UmbContentNode = ThisIContent;
             ac.IsPublished = ac.UmbContentNode.Published;
+            ac.DocTypeAlias = ThisIContent.ContentType.Alias;
 
             if (ThisIContent.Template != null)
             {
@@ -336,8 +312,6 @@
                 {
                     var iPub = _umbracoHelper.Content(ThisIContent.Id);
                     ac.UmbPublishedNode = iPub;
-                    //ac.RelativeNiceUrl = iPub.Url(mode: UrlMode.Relative);
-                    //ac.FullNiceUrl = iPub.Url(mode: UrlMode.Absolute);
                 }
                 catch (Exception e)
                 {
@@ -365,21 +339,7 @@
             return nodesList;
         }
 
-        private AuditableContent ConvertIPubContentToAuditableContent(IPublishedContent PubContentNode)
-        {
-            var ac = new AuditableContent();
-            ac.UmbContentNode = _services.ContentService.GetById(PubContentNode.Id);
-            ac.UmbPublishedNode = PubContentNode;
-            ac.NodePath = AuditHelper.NodePath(ac.UmbContentNode);
-            ac.TemplateAlias = GetTemplateAlias(ac.UmbContentNode);
-            //this.DocTypes = new List<string>();
-
-            return ac;
-        }
-
         #endregion
-
-
 
         #region DocTypes
 
@@ -404,13 +364,13 @@
             return list;
         }
 
+        /// <summary>
+        /// Get all Doctypes which are used as Compositions
+        /// </summary>
+        /// <returns></returns>
         public IEnumerable<IContentTypeComposition> GetAllCompositions()
         {
-            if (_AllContentTypeComps.Any())
-            {
-                return _AllContentTypeComps;
-            }
-            else
+            if (!_AllContentTypeComps.Any())
             {
                 var doctypes = _services.ContentTypeService.GetAllContentTypes();
                 var comps = doctypes.SelectMany(n => n.ContentTypeComposition);
@@ -420,7 +380,9 @@
                 return _AllContentTypeComps;
             }
 
+            return _AllContentTypeComps;
         }
+
 
         /// <summary>
         /// Gets list of all DocTypes on site as AuditableDoctype models
@@ -451,7 +413,6 @@
             adt.Alias = ContentType.Alias;
             adt.Guid = ContentType.Key;
             adt.Id = ContentType.Id;
-            //adt.IsElement = ContentType.;
 
             if (ContentType.DefaultTemplate != null)
             {
@@ -481,9 +442,15 @@
             adt.IsComposition = allCompsIds.Contains(ContentType.Id);
             adt.FolderPath = GetFolderContainerPath(ContentType);
 
-            //adt.HasContentNodes = _services.ContentTypeService. HasContentNodes(ContentType.Id);
+            var allContent = GetAllContent();
+            var matchingContent = allContent.Where(n => n.ContentType.Id == ContentType.Id);
+            adt.HasContentNodes = matchingContent.Any();
+            adt.QtyContentNodes = matchingContent.Count();
 
-
+            var allDataTypes = GetAllAuditableDataTypes();
+            var elementTypes = allDataTypes.Where(n => n.UsesDocTypes.Contains(ContentType.Alias));
+            adt.UsedInDataTypes = elementTypes;
+            adt.IsElement = elementTypes.Any();
 
             return adt;
         }
@@ -514,29 +481,6 @@
 
             return folders;
         }
-
-
-
-        ///// <summary>
-        ///// Gets list of all DocTypes on site as AuditableDoctype models
-        ///// </summary>
-        ///// <returns></returns>
-        //public static IEnumerable<AuditableDocType> GetAuditableDocTypes()
-        //{
-        //    var list = new List<AuditableDocType>();
-
-        //    var doctypes = umbDocTypeService.GetAllContentTypes();
-
-        //    foreach (var type in doctypes)
-        //    {
-        //        if (type != null)
-        //        {
-        //            list.Add(new AuditableDocType(type));
-        //        }
-        //    }
-
-        //    return list;
-        //}
 
         #endregion
 
@@ -720,49 +664,73 @@
 
         private Dictionary<PropertyType, string> PropsWithDocTypes()
         {
-            var properties = new Dictionary<PropertyType, string>();
-            var docTypes = _services.ContentTypeService.GetAllContentTypes();
-            foreach (var doc in docTypes)
+            if (!_AllPropsWithDocTypes.Any())
             {
-                foreach (var prop in doc.PropertyTypes)
+                var properties = new Dictionary<PropertyType, string>();
+                var docTypes = _services.ContentTypeService.GetAllContentTypes();
+                foreach (var doc in docTypes)
                 {
-                    properties.Add(prop, doc.Alias);
+                    foreach (var prop in doc.PropertyTypes)
+                    {
+                        properties.Add(prop, doc.Alias);
+                    }
                 }
+
+                _AllPropsWithDocTypes = properties;
             }
 
-            return properties;
+            return _AllPropsWithDocTypes;
         }
 
         #endregion
 
         #region AuditableDataTypes
 
-        public IEnumerable<AuditableDataType> AllDataTypes()
+        public IEnumerable<AuditableDataType> GetAllAuditableDataTypes()
         {
-            var list = new List<AuditableDataType>();
-            var datatypes = _services.DataTypeService.GetAllDataTypeDefinitions();
-
-            var properties = PropsWithDocTypes();
-
-
-            foreach (var dt in datatypes)
+            if (!_AllAuditableDataTypes.Any())
             {
-                var adt = new AuditableDataType();
-                adt.Name = dt.Name;
-                adt.EditorAlias = dt.PropertyEditorAlias;
-                adt.Guid = dt.Key;
-                adt.Id = dt.Id;
-                adt.FolderPath = GetFolderContainerPath(dt);
-                adt.ConfigurationJson = JsonConvert.SerializeObject(dt.AdditionalData);
+                var list = new List<AuditableDataType>();
+                var datatypes = _services.DataTypeService.GetAllDataTypeDefinitions();
 
-                var matchingProps = properties.Where(p => p.Key.DataTypeId == dt.Key);
-                adt.UsedOnProperties = matchingProps;
+                foreach (var dt in datatypes)
+                {
+                    list.Add(ConvertIDataTypeDefinitionToAuditableDataType(dt));
+                }
 
-                list.Add(adt);
+                _AllAuditableDataTypes = list;
             }
 
-            return list;
+            return _AllAuditableDataTypes.ToList();
         }
+
+        private AuditableDataType ConvertIDataTypeDefinitionToAuditableDataType(IDataTypeDefinition DataType)
+        {
+            var properties = PropsWithDocTypes();
+
+            var adt = new AuditableDataType();
+            adt.Name = DataType.Name;
+            adt.EditorAlias = DataType.PropertyEditorAlias;
+            adt.Guid = DataType.Key;
+            adt.Id = DataType.Id;
+            adt.FolderPath = GetFolderContainerPath(DataType);
+
+            var matchingProps = properties.Where(p => p.Key.DataTypeDefinitionId == DataType.Id);
+            adt.UsedOnProperties = matchingProps;
+
+            var preValues = _services.DataTypeService.GetPreValuesCollectionByDataTypeId(DataType.Id).PreValuesAsDictionary;
+            adt.ConfigurationDictionary = preValues;
+            adt.ConfigurationJson = JsonConvert.SerializeObject(preValues);
+
+            adt.UsesDocTypes = new List<string>();
+            if (DataType.PropertyEditorAlias == "Umbraco.NestedContent")
+            {
+                adt.UsesDocTypes = PropertyEditorNestedContentInfo.GetRelatedDocumentTypes(preValues);
+            }
+
+            return adt;
+        }
+
 
         private List<string> GetFolderContainerPath(IDataTypeDefinition DataType)
         {
@@ -797,7 +765,7 @@
 
         public IEnumerable<IGrouping<string, string>> TemplatesUsedOnContent()
         {
-            var allContent = this.GetContentNodes();
+            var allContent = this.GetAllAuditableContent();
             var allContentTemplates = allContent.Select(n => n.TemplateAlias);
             return allContentTemplates.GroupBy(n => n);
         }
@@ -806,7 +774,7 @@
         {
             var allTemplateAliases = _services.FileService.GetTemplates().Select(n => n.Alias).ToList();
 
-            var allContent = this.GetContentNodes();
+            var allContent = this.GetAllAuditableContent();
 
             var contentTemplatesInUse = allContent.Select(n => n.TemplateAlias).Distinct().ToList();
 
@@ -819,60 +787,87 @@
         #endregion
 
         #region AuditableTemplates
-        public IEnumerable<AuditableTemplate> GetAuditableTemplates()
+        public IEnumerable<AuditableTemplate> GetAuditableTemplates(bool IncludeContentNodesCount)
         {
+            var key = IncludeContentNodesCount ? "IncludesContent" : "DoesNotIncludeContent";
+            if (_AllAuditableTemplates.Any())
+            {
+                if (_AllAuditableTemplates.ContainsKey(key))
+                {
+                    return _AllAuditableTemplates[key].ToList();
+                }
+            }
+
+            //else fill list
             var list = new List<AuditableTemplate>();
             var templates = _services.FileService.GetTemplates();
 
-            var content = GetContentNodes().ToList();
-            var docTypes = GetAllDocTypes().ToList();
-
             foreach (var temp in templates)
             {
-                var at = new AuditableTemplate();
-                at.Name = temp.Name;
-                at.Alias = temp.Alias;
-                at.Guid = temp.Key;
-                at.Id = temp.Id;
-                at.Udi = temp.GetUdi();
-                at.FolderPath = GetFolderContainerPath(temp);
-                at.IsMaster = temp.IsMasterTemplate;
-                at.HasMaster = temp.MasterTemplateAlias;
-                at.CodeLength = temp.Content.Length;
-                at.CreateDate = temp.CreateDate;
-                at.UpdateDate = temp.UpdateDate;
-                at.OriginalPath = temp.OriginalPath;
-                //at.XXX = temp.;
-                //at.XXX = temp.UpdateDate;
-                //at.ConfigurationJson = JsonConvert.SerializeObject(temp.Configuration);
-
-                var matchingContent = content.Where(p => p.TemplateAlias == temp.Alias);
-                at.UsedOnContent = matchingContent.Count();
-
-                var doctypesAllowed = docTypes.Where(n => n.AllowedTemplates.Contains(temp));
-                if (doctypesAllowed.Any())
-                {
-                    at.IsAllowedOn = doctypesAllowed;
-                }
-                else
-                {
-                    at.IsAllowedOn = new List<IContentType>();
-                }
-
-                var doctypeDefault = docTypes.Where(n => n.DefaultTemplate != null && n.DefaultTemplate.Id == temp.Id);
-                if (doctypeDefault.Any())
-                {
-                    at.DefaultTemplateFor = doctypeDefault;
-                }
-                else
-                {
-                    at.DefaultTemplateFor = new List<IContentType>();
-                }
-
-                list.Add(at);
+                list.Add(ConvertITemplateToAuditableTemplate(temp, IncludeContentNodesCount));
             }
 
+            _AllAuditableTemplates.Add(key, list);
+
             return list;
+        }
+
+        private AuditableTemplate ConvertITemplateToAuditableTemplate(ITemplate Template, bool IncludeContentNodesCount)
+        {
+            var docTypes = GetAllDocTypes().ToList();
+
+            var at = new AuditableTemplate();
+            at.Name = Template.Name;
+            at.Alias = Template.Alias;
+            at.Guid = Template.Key;
+            at.Id = Template.Id;
+            at.Udi = Template.GetUdi();
+            at.FolderPath = GetFolderContainerPath(Template);
+            at.TemplateCode = Template.Content;
+            at.CodeLength = Template.Content.Length;
+            at.CreateDate = Template.CreateDate;
+            at.UpdateDate = Template.UpdateDate;
+            at.OriginalPath = Template.OriginalPath;
+
+            var layout = GetLayoutFromViewFile(Template);
+            at.ViewLayout = layout;
+
+            at.IsMaster = Template.IsMasterTemplate;
+            at.HasMaster = Template.MasterTemplateAlias;
+
+            if (IncludeContentNodesCount)
+            {
+                var content = GetAllAuditableContent().ToList();
+
+                var matchingContent = content.Where(p => p.TemplateAlias == Template.Alias);
+                at.UsedOnContent = matchingContent.Count();
+            }
+            else
+            {
+                at.UsedOnContent = null;
+            }
+
+            var doctypesAllowed = docTypes.Where(n => n.AllowedTemplates.Contains(Template)).ToList();
+            if (doctypesAllowed.Any())
+            {
+                at.IsAllowedOn = doctypesAllowed;
+            }
+            else
+            {
+                at.IsAllowedOn = new List<IContentType>();
+            }
+
+            var doctypeDefault = docTypes.Where(n => n.DefaultTemplate != null && n.DefaultTemplate.Id == Template.Id).ToList();
+            if (doctypeDefault.Any())
+            {
+                at.DefaultTemplateFor = doctypeDefault;
+            }
+            else
+            {
+                at.DefaultTemplateFor = new List<IContentType>();
+            }
+
+            return at;
         }
 
         private List<string> GetFolderContainerPath(ITemplate Template)
@@ -912,6 +907,44 @@
             }
 
             return templateAlias;
+        }
+
+        private string GetLayoutFromViewFile(ITemplate Template)
+        {
+            var fileContent = Template.Content;
+
+            var matchColl = Regex.Matches(fileContent, @"Layout\s*=\s*""*(\w*)");
+            if (matchColl.Count > 0)
+            {
+                var matches = matchColl.Cast<Match>().ToList();
+                var fullMatch = matches.Select(x => x.Value).ToList();
+                var layoutOnly = matches.Select(x => x.Groups[1].Value).ToList();
+
+                var result= layoutOnly.First();
+                if (result.Trim() == "null")
+                {
+                    return "[NULL]";
+                }
+                else
+                {
+                    return result.Trim();
+                }
+            }
+
+            return "[UNKNOWN]";
+
+            //var viewPath = Template.VirtualPath;
+            //var httpContext = new HttpContextWrapper(new HttpContext(new HttpRequest("", "http://dummyurl", ""), new HttpResponse(new StreamWriter(new MemoryStream()))));
+            //var page = Activator.CreateInstance(BuildManager.GetCompiledType(viewPath)) as WebViewPage;
+
+            //page.Context = httpContext;
+            //page.PushContext(new WebPageContext(), new StreamWriter(new MemoryStream()));
+            //page.Execute();
+
+            //var layoutFileFullName = page.Layout;
+
+            //return string.IsNullOrEmpty(layoutFileFullName)? "NULL" :  layoutFileFullName;
+
         }
         #endregion
 

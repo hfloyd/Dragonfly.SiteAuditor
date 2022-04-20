@@ -15,14 +15,14 @@
     <RepositoryUrl>https://github.com/hfloyd/Dragonfly.SiteAuditor</RepositoryUrl>
     <PackageId>Dragonfly.SiteAuditor</PackageId>
     <AssemblyName>Dragonfly.SiteAuditor</AssemblyName>
-    <Version>1.4.5</Version>
-    <PackageReleaseNotes>Updated Umbraco dependency to 7.8.0, integrated enhancements from v8 SiteAuditor</PackageReleaseNotes>
+    <Version>1.6.0</Version>
+    <PackageReleaseNotes>Fixes</PackageReleaseNotes>
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|AnyCPU'">
     <DocumentationFile>bin\Debug\net45\Dragonfly.SiteAuditor.xml</DocumentationFile>
   </PropertyGroup>
   <ItemGroup>
-    <PackageReference Include="Dragonfly.Net" Version="1.30.0" />
+    <PackageReference Include="Dragonfly.Net" Version="1.31.0" />
     <PackageReference Include="Dragonfly.Umbraco7" Version="2.6.1" />
     <PackageReference Include="UmbracoCms.Core" Version="7.8.0" PrivateAssets="All" />
   </ItemGroup>
@@ -49,7 +49,7 @@
       <Pack>true</Pack>
       <PackagePath>\</PackagePath>
     </Content>
-    <Content Include="Views/**/*.*">
+    <Content Include="App_Plugins/**/*.*">
       <Pack>true</Pack>
       <BuildAction>Content</BuildAction>
       <IncludeInPackage>true</IncludeInPackage>
@@ -63,6 +63,6 @@
   <Import Project="..\Custom.targets" />
 
   <Target Name="PostBuild" AfterTargets="PostBuildEvent">
-    <Exec Command="REM XCOPY /y &quot;$(TargetDir)$(TargetName).*&quot; &quot;$(ProjectDir)\UmbPackage&quot;&#xD;&#xA;&#xD;&#xA;XCOPY /y &quot;$(TargetDir)$(TargetName).*&quot; &quot;C:\Users\Heather\NAS Folders\Active Projects\Webs\Clients\CENT\sourcecode\CentricHealthGp.Web\bin&quot;&#xD;&#xA;XCOPY /s /r /y &quot;$(ProjectDir)\App_Plugins&quot; &quot;C:\Users\Heather\NAS Folders\Active Projects\Webs\Clients\CENT\sourcecode\CentricHealthGp.Web\App_Plugins&quot;" />
+    <Exec Command="REM XCOPY /y &quot;$(TargetDir)$(TargetName).*&quot; &quot;$(ProjectDir)\UmbPackage&quot;&#xD;&#xA;&#xD;&#xA;REM XCOPY /y &quot;$(TargetDir)$(TargetName).*&quot; &quot;C:\.Web\bin&quot;&#xD;&#xA;REM XCOPY /s /r /y &quot;$(ProjectDir)\App_Plugins&quot; &quot;C:\.Web\App_Plugins&quot;" />
   </Target>
 </Project>

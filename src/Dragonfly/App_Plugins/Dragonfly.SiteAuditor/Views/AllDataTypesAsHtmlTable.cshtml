@@ -84,7 +84,7 @@
                 @*//Used On Properties*@
                 @if (dt.UsedOnProperties.Any())
                 {
-                    <td>@Html.Raw(string.Join(" <br/> ", dt.UsedOnProperties.Select(n => $"{n.Value} [{n.Key.Alias}]")))</td>
+                    <td>@Html.Raw(string.Join(" <br/> ", dt.UsedOnProperties.Select(n => string.Format("{0} [{1}]", n.Value,n.Key.Alias))))</td>
                 }
                 else
                 {

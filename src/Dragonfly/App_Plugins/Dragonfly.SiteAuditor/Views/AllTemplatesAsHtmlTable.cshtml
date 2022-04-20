@@ -101,7 +101,7 @@
 						@*//Allowed On Types*@
 						@if (temp.IsAllowedOn.Any())
 						{
-			 <td>@Html.Raw(string.Join(" <br/> ", temp.IsAllowedOn.Select(n => $"{n.Alias} [{n.Id}]")))</td>
+			 <td>@Html.Raw(string.Join(" <br/> ", temp.IsAllowedOn.Select(n => string.Format( "{0} [{1}]", n.Alias, n.Id))))</td>
 						}
 						else
 						{
@@ -110,7 +110,7 @@
 						@*//Is Default for*@
 						@if (temp.DefaultTemplateFor.Any())
 						{
-			 <td>@Html.Raw(string.Join(" <br/> ", temp.IsAllowedOn.Select(n => $"{n.Alias} [{n.Id}]")))</td>
+			 <td>@Html.Raw(string.Join(" <br/> ", temp.IsAllowedOn.Select(n => string.Format("{0} [{1}]", n.Alias, n.Id))))</td>
 						}
 						else
 						{

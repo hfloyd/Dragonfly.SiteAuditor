@@ -54,89 +54,97 @@
 	</tr>
    </thead>
    <tbody>
-	@foreach (var dt in docTypes)
-	{
-		counter++;
+							@foreach (var dt in docTypes)
+							{
+								counter++;
 		<tr>
 
-			@*// #*@
-		    <td>@counter</td>
+									@*// #*@
+		 <td>@counter</td>
 
-            @*//Actions*@
-		    <td>@{ Html.RenderPartial("/App_Plugins/Dragonfly.SiteAuditor/Views/DataFormats/SchemaActions.cshtml", dt.Id, new ViewDataDictionary()
+						@*//Actions*@
+		 <td>
+							
+							@{
+								Html.RenderPartial("/App_Plugins/Dragonfly.SiteAuditor/Views/DataFormats/SchemaActions.cshtml", dt.Id, new ViewDataDictionary()
 										{
 										{"EntityType", "DocType" }
-										}); }
-		    </td>
+										}); 
+							
+							}
+		 </td>
 
-            @*//Name*@
-		    <td>@dt.Name</td>
+						@*//Name*@
+		 <td>@dt.Name</td>
 
-			@*//Alias*@
-		    <td>@dt.Alias</td>
+									@*//Alias*@
+		 <td>@dt.Alias</td>
 
-			@*//Folder*@
-		    <td>@dt.PathAsText</td>
+									@*//Folder*@
+		 <td>@dt.PathAsText</td>
 
-			@*//Allowed Templates*@
-			@if (dt.AllowedTemplates.Any())
-			{
-			 <td>@Html.Raw(string.Join(" <br/> ", dt.AllowedTemplates.Select(n => $"{n.Value} [{n.Key}]")))</td>
-			}
-			else
-			{
+									@*//Allowed Templates*@
+									@if (dt.AllowedTemplates.Any())
+									{
+			 <td>@Html.Raw(string.Join(" <br/> ", dt.AllowedTemplates.Select(n => string.Format("{0} [{1}]", n.Value, n.Key))))</td>
+									}
+									else
+									{
 			 <td>~NONE~</td>
-			}
+									}
 
-			@*//Default Template*@
-		    <td>@dt.DefaultTemplateName</td>
+									@*//Default Template*@
+		 <td>@dt.DefaultTemplateName</td>
 
-			@*//Allowed Children*@
-			@if (dt.ContentType.AllowedContentTypes.Any())
-			{
+									@*//Allowed Children*@
+									@if (dt.ContentType.AllowedContentTypes.Any())
+									{
 			 <td>@Html.Raw(string.Join(" <br/> ", dt.ContentType.AllowedContentTypes.Select(n => n.Alias)))</td>
-			}
-			else
-			{
+									}
+									else
+									{
 			 <td>~NONE~</td>
-			}
+									}
 
-			@*//Qty Content Nodes*@
-            <td>@dt.QtyContentNodes</td>
-			
-            @*//Has Content Nodes*@
-            <td>@dt.HasContentNodes</td>
+									@*//Qty Content Nodes*@
+		 <td>@dt.QtyContentNodes</td>
 
-            @*//Is an Element Type?*@
-		    <td>@dt.IsElement</td>
+	
+						@*//Has Content Nodes*@
+		 <td>@dt.HasContentNodes</td>
 
-            @*//Is a Composition?*@
-		    <td>@dt.IsComposition</td>
+						@*//Is an Element Type?*@
+		 <td>@dt.IsElement</td>
 
-			@*//Compositions Used*@
-			@if (dt.CompositionsUsed.Any())
-			{
-			 <td>@Html.Raw(string.Join(" <br/> ", dt.CompositionsUsed.Select(n => $"{n.Value} [{n.Key}]")))</td>
-			}
-			else
-			{
+						@*//Is a Composition?*@
+		 <td>@dt.IsComposition</td>
+
+									@*//Compositions Used*@
+									@if (dt.CompositionsUsed.Any())
+									{
+			 <td>@Html.Raw(string.Join(" <br/> ", dt.CompositionsUsed.Select(n => string.Format("{0} [{1}]", n.Value,n.Key))))</td>
+									}
+									else
+									{
 			 <td>~NONE~</td>
-			}
+									}
 
-			@*// ID*@
-		    <td>@dt.Id</td>
+									@*// ID*@
+		 <td>@dt.Id</td>
 
-			@*// GUID*@
-		    <td>@dt.Guid.ToString()</td>
+									@*// GUID*@
+		 <td>@dt.Guid.ToString()</td>
 
-			@* //Create Date*@
-		    <td>@{ Html.RenderPartial("/App_Plugins/Dragonfly.SiteAuditor/Views/DataFormats/DateValue.cshtml", dt.ContentType.CreateDate); }</td>
+									@* //Create Date*@
+		 <td>@{
+								Html.RenderPartial("/App_Plugins/Dragonfly.SiteAuditor/Views/DataFormats/DateValue.cshtml", dt.ContentType.CreateDate); }</td>
 
-            @*//Date Last Updated*@
-		    <td>@{ Html.RenderPartial("/App_Plugins/Dragonfly.SiteAuditor/Views/DataFormats/DateValue.cshtml", dt.ContentType.UpdateDate); }</td>
+						@*//Date Last Updated*@
+		 <td>@{
+								Html.RenderPartial("/App_Plugins/Dragonfly.SiteAuditor/Views/DataFormats/DateValue.cshtml", dt.ContentType.UpdateDate); }</td>
 
 		</tr>
-	}
+							}
 
    </tbody>
    <tfoot>

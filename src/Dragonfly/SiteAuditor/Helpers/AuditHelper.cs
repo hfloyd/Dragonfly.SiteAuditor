@@ -5,6 +5,7 @@
     using System.Linq;
     using Dragonfly.SiteAuditor.Models;
     using Umbraco.Core;
+    using Umbraco.Core.Logging;
     using Umbraco.Core.Models;
     using Umbraco.Core.Services;
     using Umbraco.Web;
@@ -15,10 +16,13 @@
     public static class AuditHelper
     {
         private static UmbracoHelper umbHelper = new Umbraco.Web.UmbracoHelper(Umbraco.Web.UmbracoContext.Current);
+        private static UmbracoContext umbContext = UmbracoContext.Current;
         private static IContentService umbContentService = ApplicationContext.Current.Services.ContentService;
         private static IContentTypeService umbContentTypeService = ApplicationContext.Current.Services.ContentTypeService;
         private static IDataTypeService  umbDataTypeService = ApplicationContext.Current.Services.DataTypeService;
-     
+        private static IFileService umbFileService = ApplicationContext.Current.Services.FileService;
+        private static SiteAuditorService siteAuditorService = new SiteAuditorService();
+
 
         [Obsolete("Use 'string.Join()' instead")]
         public static string ConvertToSeparatedString(List<string> ListOfStrings, string Separator)
@@ -148,8 +152,8 @@
                     {
                         var x = new PropertyDoctypeInfo();
                         x.DocTypeAlias = docType.Alias;
-                        
-                       // x.GroupName = docType.PropertyGroups.Contains(prop)
+                       // x.Id = prop.Id;
+                        x.GroupName = docType.PropertyGroups.First(n => n.PropertyTypes.Contains(prop)).Name;
                             docTypesList.Add(x);
                     }
                 }
@@ -225,6 +229,58 @@
             }
 
             return dtInfo;
+        }
+
+        public static AuditableContent ConvertToAuditableContent(IPublishedContent IPub)
+        {
+            var iContent = umbContentService.GetById(IPub.Id);
+            var ac = new AuditableContent();
+            ac.UmbContentNode = iContent;
+            ac.IsPublished = ac.UmbContentNode.Published;
+            ac.DocTypeAlias = iContent.ContentType.Alias;
+
+            if (iContent.Template != null)
+            {
+                var template = umbFileService.GetTemplate((int)iContent.Template.Id);
+                ac.TemplateAlias = template.Alias;
+            }
+            else
+            {
+                ac.TemplateAlias = "NONE";
+            }
+
+            if (ac.UmbContentNode.Published)
+            {
+                try
+                {
+                    var iPub = umbHelper.Content(iContent.Id);
+                    ac.UmbPublishedNode = iPub;
+                }
+                catch (Exception e)
+                {
+                    try
+                    {
+                        //Get preview - unpublished
+                        var iPub = umbContext.ContentCache.GetById(true, iContent.Id);
+                        ac.UmbPublishedNode = iPub;
+                    }
+                    catch (Exception exception)
+                    {
+                        ac.UmbPublishedNode = null;
+                        var nodeId = iContent != null ? iContent.Id : 0;
+                        var nodeName = iContent != null ? iContent.Name : "UNKNOWN - IContent is NULL";
+                        LogHelper.Error<AuditableContent>($"Unable to get a PublishedContent for node #{nodeId} : '{nodeName}'", exception);
+                    }
+
+                }
+            }
+
+            ac.RelativeNiceUrl = ac.UmbPublishedNode != null ? ac.UmbPublishedNode.Url : "UNPUBLISHED";
+            ac.FullNiceUrl = ac.UmbPublishedNode != null ? ac.UmbPublishedNode.UrlAbsolute() : "UNPUBLISHED";
+            ac.NodePath = AuditHelper.NodePath(iContent);
+            ac.NodePathAsText = string.Join(siteAuditorService.DefaultDelimiter, ac.NodePath);
+
+            return ac;
         }
     }
 }

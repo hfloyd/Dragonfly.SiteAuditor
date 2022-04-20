@@ -499,9 +499,9 @@
             };
         }
 
-        // /Umbraco/backoffice/Api/SiteAuditorApi/GetAllPropertiesAsHtml
+        // /Umbraco/backoffice/Api/SiteAuditorApi/GetAllPropertiesAsHtmlTable
         [System.Web.Http.AcceptVerbs("GET")]
-        public HttpResponseMessage GetAllPropertiesAsHtml()
+        public HttpResponseMessage GetAllPropertiesAsHtmlTable()
         {
             var saService = GetSiteAuditorService();
             var returnSB = new StringBuilder();

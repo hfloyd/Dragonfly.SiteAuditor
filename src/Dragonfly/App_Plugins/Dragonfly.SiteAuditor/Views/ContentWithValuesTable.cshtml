@@ -1,4 +1,6 @@
 @using Dragonfly.SiteAuditor.Helpers
+@using Dragonfly.SiteAuditor.Models
+
 @model IEnumerable<IPublishedContent>
 
 @{
@@ -49,7 +51,7 @@
                 {
                     counter++;
                     var dtInfo = AuditHelper.GetPropertyDataTypeInfo(propertyAlias, node);
-
+                    var acNode = AuditHelper.ConvertToAuditableContent(node);
                     <tr>
                         @if (fancyFormat)
                         {
@@ -58,7 +60,7 @@
 
                             //Actions
                             <td>
-                                @{ Html.RenderPartial("/App_Plugins/Dragonfly.SiteAuditor/Views/DataFormats/NodeActions.cshtml", node); }
+                                @{ Html.RenderPartial("/App_Plugins/Dragonfly.SiteAuditor/Views/DataFormats/NodeActions.cshtml", acNode); }
                             </td>
                         }
 

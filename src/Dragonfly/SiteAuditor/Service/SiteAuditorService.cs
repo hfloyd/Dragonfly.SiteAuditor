@@ -315,9 +315,20 @@
                 }
                 catch (Exception e)
                 {
-                    //Get preview - unpublished
-                    var iPub = _umbracoContext.ContentCache.GetById(true, ThisIContent.Id);
-                    ac.UmbPublishedNode = iPub;
+                    try
+                    {
+                        //Get preview - unpublished
+                        var iPub = _umbracoContext.ContentCache.GetById(true, ThisIContent.Id);
+                        ac.UmbPublishedNode = iPub;
+                    }
+                    catch (Exception exception)
+                    {
+                        ac.UmbPublishedNode = null;
+                        var nodeId = ThisIContent!=null ? ThisIContent.Id:0;
+                        var nodeName = ThisIContent != null ? ThisIContent.Name : "UNKNOWN - IContent is NULL";
+                        LogHelper.Error<AuditableContent>($"Unable to get a PublishedContent for node #{nodeId} : '{nodeName}'",exception);
+                    }
+
                 }
             }
 
@@ -920,7 +931,7 @@
                 var fullMatch = matches.Select(x => x.Value).ToList();
                 var layoutOnly = matches.Select(x => x.Groups[1].Value).ToList();
 
-                var result= layoutOnly.First();
+                var result = layoutOnly.First();
                 if (result.Trim() == "null")
                 {
                     return "[NULL]";
